@@ -64,16 +64,12 @@ endif()
 # Packages
 find_package(glfw3 REQUIRED)
 
+find_package(imgui REQUIRED)
+
 # Target: template_app
 set(template_app_SOURCES
 	cmake.toml
 	"external/glad/src/glad.c"
-	"external/imgui/backends/imgui_impl_glfw.cpp"
-	"external/imgui/backends/imgui_impl_opengl3.cpp"
-	"external/imgui/imgui.cpp"
-	"external/imgui/imgui_draw.cpp"
-	"external/imgui/imgui_tables.cpp"
-	"external/imgui/imgui_widgets.cpp"
 	"src/app/app.cpp"
 	"src/main.cpp"
 )
@@ -88,15 +84,13 @@ target_compile_features(template_app PRIVATE
 )
 
 target_include_directories(template_app PRIVATE
-	external
-	"external/imgui"
-	"external/imgui/backends"
 	"external/glad/include"
 	src
 )
 
 target_link_libraries(template_app PRIVATE
 	glfw
+	imgui::imgui
 )
 
 target_precompile_headers(template_app PRIVATE
