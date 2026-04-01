@@ -3,7 +3,7 @@
 #define IMGUI_IMPL_OPENGL_LOADER_CUSTOM //use glad not their own loader
 
 #ifdef __cplusplus
-#include <iostream>
+#include <print>
 #include <string>
 
 #include "imgui.h"

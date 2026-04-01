@@ -5,8 +5,6 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#include <iostream>
-
 void App::init() {
     if(!setup_opengl()) {
         return;
@@ -21,14 +19,14 @@ void App::render_ui() {
     ImGui::Separator();
 
     if(ImGui::Button("Click Me")) {
-        std::cout << "Button 'Click Me' has heen clicked!\n";
+        std::print("Button 'Click Me' has heen clicked!");
     }
 
 }
 
 bool App::setup_opengl() {
     if(!glfwInit()) {
-        std::cerr << "Failed to initialize GLFW.\n";
+        std::print("Failed to initialize GLFW.");
         return false;
     }
 
@@ -39,7 +37,7 @@ bool App::setup_opengl() {
 
     window = glfwCreateWindow(DEF_RES_W, DEF_RES_H, APP_NAME, nullptr, nullptr);
     if(window == nullptr) {
-        std::cerr << "Failed to create GLFW window. OpenGL 3.3 support is required!\n";
+        std::print("Failed to create GLFW window. OpenGL 3.3 support is required!");
         glfwTerminate();
         return false;
     }
