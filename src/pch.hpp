@@ -4,12 +4,15 @@
 
 #ifdef __cplusplus
 #include <print>
+#include <filesystem>
 #include <string>
 
 #include "imgui.h"
 #include "imgui_stdlib.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+
+namespace fs = std::filesystem;
 #endif
 
 #include <glad/glad.h>

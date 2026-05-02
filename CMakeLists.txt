@@ -40,10 +40,13 @@ find_package(glfw3 REQUIRED)
 
 find_package(imgui REQUIRED)
 
+find_package(nlohmann_json REQUIRED)
+
 # Target: template_app
 set(template_app_SOURCES
 	cmake.toml
 	"src/app/app.cpp"
+	"src/backend/config/config.cpp"
 	"src/main.cpp"
 	"vendor/glad/src/glad.c"
 	"vendor/imgui/imgui_stdlib.cpp"
@@ -67,6 +70,7 @@ target_include_directories(template_app PRIVATE
 target_link_libraries(template_app PRIVATE
 	glfw
 	imgui::imgui
+	nlohmann_json::nlohmann_json
 )
 
 target_precompile_headers(template_app PRIVATE

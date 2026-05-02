@@ -1,9 +1,16 @@
 #include "app.hpp"
 #include <constants.hpp>
 
+App::App(fs::path config_dir) : config(config_dir) {}
+
 void App::init() {
     if(!setup_opengl()) return;
     if(!setup_imgui()) return;
+
+    if(!config.init()) {
+        std::println("Config is missing and could not be generated!");
+    }
+    config.save();
 }
 
 void App::render_ui() {

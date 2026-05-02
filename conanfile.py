@@ -14,6 +14,7 @@ class DesktopAppTemplate(ConanFile):
         self.requires("imgui/1.92.6")
         self.requires("glfw/3.4")
         self.requires("opengl/system")
+        self.requires("nlohmann_json/3.12.0")
 
     def layout(self):
         cmake_layout(self)
