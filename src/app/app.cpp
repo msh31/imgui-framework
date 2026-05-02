@@ -1,6 +1,8 @@
 #include "app.hpp"
 #include <constants.hpp>
 
+#include <frontend/theme/theme.hpp>
+
 App::App(fs::path config_dir) : config(config_dir) {}
 
 void App::init() {
@@ -20,6 +22,8 @@ void App::render_ui() {
     if(ImGui::Button("Click Me")) {
         std::print("Button 'Click Me' has heen clicked!");
     }
+    ImGui::SameLine();
+    ImGui::Checkbox("Dark Mode", &config.settings.dark_mode);
 }
 
 bool App::setup_opengl() {
@@ -66,6 +70,7 @@ bool App::setup_imgui() {
 
 void App::render() {
     glClear(GL_COLOR_BUFFER_BIT);
+    ThemeManager::apply_theme(config.settings.dark_mode ? ThemeType::Dark : ThemeType::Light);
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
