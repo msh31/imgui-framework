@@ -2,6 +2,8 @@
 #include <constants.hpp>
 
 #include <frontend/theme/theme.hpp>
+#include <frontend/fonts/jbm_reg.h>
+#include <frontend/fonts/font_awesome.hpp>
 
 App::App(fs::path config_dir) : config(config_dir) {}
 
@@ -20,10 +22,17 @@ void App::render_ui() {
     ImGui::Separator();
 
     if(ImGui::Button("Click Me")) {
-        std::print("Button 'Click Me' has heen clicked!");
+        std::println("Button 'Click Me' has heen clicked!");
     }
     ImGui::SameLine();
     ImGui::Checkbox("Dark Mode", &config.settings.dark_mode);
+
+    ImGui::Separator();
+    if(ImGui::Button("  \xef\x80\x81  Test Icon")) {
+        std::println("Icon button clicked!");
+    }
+    ImGui::SameLine();
+    ImGui::Text("\xef\x80\x88 \xef\x80\xad \xef\x83\xa9");
 }
 
 bool App::setup_opengl() {
@@ -61,6 +70,16 @@ bool App::setup_imgui() {
 
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+    ImFontConfig font_cfg;
+    font_cfg.FontDataOwnedByAtlas = false;
+
+    ImFont* jbm = io.Fonts->AddFontFromMemoryTTF((void*)jbm_reg, jbm_reg_len, 16.0f, &font_cfg);
+    font_cfg.MergeMode = true;
+    font_cfg.GlyphMinAdvanceX = 16.0f;
+    static const ImWchar icon_ranges[] = {0xf000, 0xf2e0, 0};
+    io.Fonts->AddFontFromMemoryTTF((void*)font_awesome, font_awesome_len, 16.0f, &font_cfg, icon_ranges);
+    io.FontDefault = jbm;
 
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init();
