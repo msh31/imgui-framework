@@ -1,13 +1,9 @@
 #include "app.hpp"
-#include "globals.hpp"
+#include <constants.hpp>
 
 void App::init() {
-    if(!setup_opengl()) {
-        return;
-    }
-    if(!setup_imgui()) {
-        return;
-    }
+    if(!setup_opengl()) return;
+    if(!setup_imgui()) return;
 }
 
 void App::render_ui() {
@@ -17,7 +13,6 @@ void App::render_ui() {
     if(ImGui::Button("Click Me")) {
         std::print("Button 'Click Me' has heen clicked!");
     }
-
 }
 
 bool App::setup_opengl() {
@@ -82,11 +77,10 @@ void App::render() {
         ImGuiWindowFlags_NoNavFocus;
 
     ImGui::Begin("Main Window", nullptr, window_flags);
-
     App::render_ui();
-
     ImGui::End();
     ImGui::Render();
+
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     glfwSwapBuffers(window);
     glfwPollEvents();
