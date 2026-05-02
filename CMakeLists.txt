@@ -27,7 +27,6 @@ endif()
 # Variables
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# vcpkg settings
 project(desktop-app-template
 	LANGUAGES
 		C
@@ -35,31 +34,6 @@ project(desktop-app-template
 	DESCRIPTION
 		"A simple template for cross-platform apps in C++"
 )
-
-if(CMKR_ROOT_PROJECT AND NOT CMKR_DISABLE_VCPKG)
-	include(FetchContent)
-	# Fix warnings about DOWNLOAD_EXTRACT_TIMESTAMP
-	if(POLICY CMP0135)
-		cmake_policy(SET CMP0135 NEW)
-	endif()
-	message(STATUS "Fetching vcpkg (2026.02.27)...")
-	FetchContent_Declare(vcpkg
-		URL
-			"https://github.com/microsoft/vcpkg/archive/refs/tags/2026.02.27.tar.gz"
-		SUBBUILD_DIR
-			"CMakeFiles/vcpkg-subbuild"
-		SOURCE_DIR
-			vcpkg
-		BINARY_DIR
-			"CMakeFiles/vcpkg-build"
-	)
-	FetchContent_MakeAvailable(vcpkg)
-
-	if(CMAKE_HOST_SYSTEM_NAME STREQUAL Darwin AND CMAKE_OSX_ARCHITECTURES STREQUAL "")
-		set(CMAKE_OSX_ARCHITECTURES ${CMAKE_HOST_SYSTEM_PROCESSOR} CACHE STRING "" FORCE)
-	endif()
-	include("${vcpkg_SOURCE_DIR}/scripts/buildsystems/vcpkg.cmake")
-endif()
 
 # Packages
 find_package(glfw3 REQUIRED)
@@ -69,9 +43,10 @@ find_package(imgui REQUIRED)
 # Target: template_app
 set(template_app_SOURCES
 	cmake.toml
-	"external/glad/src/glad.c"
 	"src/app/app.cpp"
 	"src/main.cpp"
+	"vendor/glad/src/glad.c"
+	"vendor/imgui/imgui_stdlib.cpp"
 )
 
 add_executable(template_app)
@@ -84,8 +59,9 @@ target_compile_features(template_app PRIVATE
 )
 
 target_include_directories(template_app PRIVATE
-	"external/glad/include"
 	src
+	"vendor/imgui"
+	"vendor/glad/include"
 )
 
 target_link_libraries(template_app PRIVATE
@@ -101,3 +77,12 @@ get_directory_property(CMKR_VS_STARTUP_PROJECT DIRECTORY ${PROJECT_SOURCE_DIR} D
 if(NOT CMKR_VS_STARTUP_PROJECT)
 	set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT template_app)
 endif()
+
+set(CMKR_TARGET template_app)
+find_path(IMGUI_INCLUDE_DIR imgui.h REQUIRED)
+cmake_path(GET IMGUI_INCLUDE_DIR PARENT_PATH IMGUI_ROOT_DIR)
+target_include_directories(template_app PRIVATE "${IMGUI_ROOT_DIR}/res/bindings")
+target_sources(template_app PRIVATE
+    "${IMGUI_ROOT_DIR}/res/bindings/imgui_impl_glfw.cpp"
+    "${IMGUI_ROOT_DIR}/res/bindings/imgui_impl_opengl3.cpp"
+)

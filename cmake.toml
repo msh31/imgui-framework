@@ -14,25 +14,31 @@ required = true
 [find-package.imgui]
 required = true
 
-[vcpkg]
-version = "2026.02.27"
-packages = ["glfw3", "imgui[glfw-binding,opengl3-binding]"]
-
 [variables]
 CMAKE_EXPORT_COMPILE_COMMANDS = true
 
 [target.template_app]
-type = "executable" # static, shared
+type = "executable" 
 sources = [
     "src/**.cpp",
 
-    # GLAD
-    "external/glad/src/glad.c",
+    "vendor/imgui/imgui_stdlib.cpp",
+    "vendor/glad/src/glad.c",
 ]
 include-directories = [
-    "external/glad/include",
     "src",
+    "vendor/imgui",
+    "vendor/glad/include",
 ]
 compile-features = ["cxx_std_23"]
 link-libraries = ["glfw", "imgui::imgui"]
 precompile-headers = ["src/pch.hpp"]
+cmake-after = """
+find_path(IMGUI_INCLUDE_DIR imgui.h REQUIRED)
+cmake_path(GET IMGUI_INCLUDE_DIR PARENT_PATH IMGUI_ROOT_DIR)
+target_include_directories(template_app PRIVATE "${IMGUI_ROOT_DIR}/res/bindings")
+target_sources(template_app PRIVATE
+    "${IMGUI_ROOT_DIR}/res/bindings/imgui_impl_glfw.cpp"
+    "${IMGUI_ROOT_DIR}/res/bindings/imgui_impl_opengl3.cpp"
+)
+"""

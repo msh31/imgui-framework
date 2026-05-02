@@ -1,0 +1,19 @@
+from conan import ConanFile
+from conan.tools.cmake import cmake_layout, CMakeToolchain, CMakeDeps
+
+class DesktopAppTemplate(ConanFile):
+    settings = "os", "compiler", "build_type", "arch"
+
+    def generate(self):
+        tc = CMakeToolchain(self, generator="Ninja")
+        tc.generate()
+        deps = CMakeDeps(self)
+        deps.generate()
+
+    def requirements(self):
+        self.requires("imgui/1.92.6")
+        self.requires("glfw/3.4")
+        self.requires("opengl/system")
+
+    def layout(self):
+        cmake_layout(self)

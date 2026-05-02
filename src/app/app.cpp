@@ -1,10 +1,6 @@
 #include "app.hpp"
 #include "globals.hpp"
 
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-
 void App::init() {
     if(!setup_opengl()) {
         return;
@@ -46,7 +42,7 @@ bool App::setup_opengl() {
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cerr << "Failed to initialize GLAD\n";
+        std::println("Failed to initialize GLAD");
         return false;
     }
 

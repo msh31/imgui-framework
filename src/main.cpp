@@ -1,6 +1,3 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include "app/app.hpp"
 
 #ifdef _WIN32 //forces Windows to treat the app as a GUI Application
