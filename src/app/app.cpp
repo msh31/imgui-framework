@@ -21,6 +21,7 @@ void App::init() {
 
 void App::render_ui() {
     active_view->render(config);
+    settings_view.render(config);
 }
 
 void App::render() {

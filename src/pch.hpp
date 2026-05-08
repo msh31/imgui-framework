@@ -6,6 +6,7 @@
 #include <print>
 #include <filesystem>
 #include <string>
+#include <functional>
 
 #include "imgui.h"
 #include "imgui_stdlib.h"

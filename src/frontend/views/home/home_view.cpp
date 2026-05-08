@@ -12,9 +12,6 @@ void HomeView::render(Config& cfg) {
     if(ImGui::Button("Click Me")) {
         std::println("Button 'Click Me' has heen clicked!");
     }
-    ImGui::SameLine();
-    ImGui::Checkbox("Dark Mode", &cfg.settings.dark_mode);
-
     ImGui::Separator();
     if(ImGui::Button("  \xef\x80\x81  Test Icon")) {
         std::println("Icon button clicked!");
@@ -22,6 +19,9 @@ void HomeView::render(Config& cfg) {
     ImGui::SameLine();
     ImGui::Text("\xef\x80\x88 \xef\x80\xad \xef\x83\xa9");
 
+    if(ImGui::Button("\xef\x80\x93")) {
+        ImGui::OpenPopup("Settings");
+    }
 }
 
 void HomeView::on_exit() {

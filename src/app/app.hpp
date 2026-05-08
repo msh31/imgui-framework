@@ -4,6 +4,7 @@
 
 #include <frontend/views/base_view.hpp>
 #include <frontend/views/home/home_view.hpp>
+#include <frontend/views/settings/settings_view.hpp>
 
 class App {
 public:
@@ -23,5 +24,7 @@ private:
     Config config;
 
     BaseView* active_view = nullptr;
+
     HomeView home_view;
+    SettingsView settings_view;
 };
