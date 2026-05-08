@@ -7,6 +7,7 @@
 
 App::App(fs::path config_dir) : config(config_dir), sidebar(this) {
     sidebar.add_item({"\xef\x80\x95", "Home", &home_view});
+    sidebar.add_item({"\xef\x86\x88", "Debug", &debug_view});
 }
 
 void App::set_active_view(BaseView* view) {

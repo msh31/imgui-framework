@@ -5,6 +5,7 @@
 #include <frontend/views/home/home_view.hpp>
 #include <frontend/views/settings/settings_view.hpp>
 #include <frontend/views/sidebar/side_bar_view.hpp>
+#include <frontend/views/debug/debug_view.hpp>
 
 class App {
 public:
@@ -31,6 +32,8 @@ private:
     BaseView* active_view = nullptr;
 
     HomeView home_view;
+    DebugView debug_view;
+
     SettingsView settings_view;
     SideBar sidebar;
 };

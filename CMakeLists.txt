@@ -49,6 +49,7 @@ set(template_app_SOURCES
 	"src/backend/config/config.cpp"
 	"src/frontend/theme/theme.cpp"
 	"src/frontend/views/base_view.cpp"
+	"src/frontend/views/debug/debug_view.cpp"
 	"src/frontend/views/home/home_view.cpp"
 	"src/frontend/views/settings/settings_view.cpp"
 	"src/frontend/views/sidebar/side_bar_view.cpp"
