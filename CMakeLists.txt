@@ -48,6 +48,8 @@ set(template_app_SOURCES
 	"src/app/app.cpp"
 	"src/backend/config/config.cpp"
 	"src/frontend/theme/theme.cpp"
+	"src/frontend/views/base_view.cpp"
+	"src/frontend/views/home/home_view.cpp"
 	"src/main.cpp"
 	"vendor/glad/src/glad.c"
 	"vendor/imgui/imgui_stdlib.cpp"

@@ -1,6 +1,9 @@
 #pragma once
-#include "backend/config/config.hpp"
+#include <backend/config/config.hpp>
 #include <backend/paths.hpp>
+
+#include <frontend/views/base_view.hpp>
+#include <frontend/views/home/home_view.hpp>
 
 class App {
 public:
@@ -18,4 +21,7 @@ private:
     void render_ui();
 
     Config config;
+
+    BaseView* active_view = nullptr;
+    HomeView home_view;
 };

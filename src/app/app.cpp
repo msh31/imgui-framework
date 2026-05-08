@@ -15,76 +15,12 @@ void App::init() {
         std::println("Config is missing and could not be generated!");
     }
     config.save();
+
+    active_view = &home_view;
 }
 
 void App::render_ui() {
-    ImGui::Text(APP_NAME);
-    ImGui::Separator();
-
-    if(ImGui::Button("Click Me")) {
-        std::println("Button 'Click Me' has heen clicked!");
-    }
-    ImGui::SameLine();
-    ImGui::Checkbox("Dark Mode", &config.settings.dark_mode);
-
-    ImGui::Separator();
-    if(ImGui::Button("  \xef\x80\x81  Test Icon")) {
-        std::println("Icon button clicked!");
-    }
-    ImGui::SameLine();
-    ImGui::Text("\xef\x80\x88 \xef\x80\xad \xef\x83\xa9");
-}
-
-bool App::setup_opengl() {
-    if(!glfwInit()) {
-        std::print("Failed to initialize GLFW.");
-        return false;
-    }
-
-    glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing (MSAA)
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // no old OpenGL
-
-    window = glfwCreateWindow(DEF_RES_W, DEF_RES_H, APP_NAME, nullptr, nullptr);
-    if(window == nullptr) {
-        std::print("Failed to create GLFW window. OpenGL 3.3 support is required!");
-        glfwTerminate();
-        return false;
-    }
-
-    glfwSetWindowSizeLimits(window, MIN_RES_W, MIN_RES_H, MAX_RES_W, MAX_RES_H); 
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::println("Failed to initialize GLAD");
-        return false;
-    }
-
-    return true;
-}
-
-//could be improved
-bool App::setup_imgui() {
-    ImGui::CreateContext();
-
-    ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-
-    ImFontConfig font_cfg;
-    font_cfg.FontDataOwnedByAtlas = false;
-
-    ImFont* jbm = io.Fonts->AddFontFromMemoryTTF((void*)jbm_reg, jbm_reg_len, 16.0f, &font_cfg);
-    font_cfg.MergeMode = true;
-    font_cfg.GlyphMinAdvanceX = 16.0f;
-    static const ImWchar icon_ranges[] = {0xf000, 0xf2e0, 0};
-    io.Fonts->AddFontFromMemoryTTF((void*)font_awesome, font_awesome_len, 16.0f, &font_cfg, icon_ranges);
-    io.FontDefault = jbm;
-
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init();
-
-    return true;
+    active_view->render(config);
 }
 
 void App::render() {
@@ -123,4 +59,55 @@ App::~App() {
     ImGui::DestroyContext();
     glfwDestroyWindow(window);
     glfwTerminate();
+}
+
+bool App::setup_opengl() {
+    if(!glfwInit()) {
+        std::print("Failed to initialize GLFW.");
+        return false;
+    }
+
+    glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing (MSAA)
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // no old OpenGL
+
+    window = glfwCreateWindow(DEF_RES_W, DEF_RES_H, APP_NAME, nullptr, nullptr);
+    if(window == nullptr) {
+        std::print("Failed to create GLFW window. OpenGL 3.3 support is required!");
+        glfwTerminate();
+        return false;
+    }
+
+    glfwSetWindowSizeLimits(window, MIN_RES_W, MIN_RES_H, MAX_RES_W, MAX_RES_H); 
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::println("Failed to initialize GLAD");
+        return false;
+    }
+
+    return true;
+}
+
+bool App::setup_imgui() {
+    ImGui::CreateContext();
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+    ImFontConfig font_cfg;
+    font_cfg.FontDataOwnedByAtlas = false;
+
+    ImFont* jbm = io.Fonts->AddFontFromMemoryTTF((void*)jbm_reg, jbm_reg_len, 16.0f, &font_cfg);
+    font_cfg.MergeMode = true;
+    font_cfg.GlyphMinAdvanceX = 16.0f;
+    static const ImWchar icon_ranges[] = {0xf000, 0xf2e0, 0};
+    io.Fonts->AddFontFromMemoryTTF((void*)font_awesome, font_awesome_len, 16.0f, &font_cfg, icon_ranges);
+    io.FontDefault = jbm;
+
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init();
+
+    return true;
 }
