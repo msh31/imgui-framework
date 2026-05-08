@@ -51,6 +51,7 @@ set(template_app_SOURCES
 	"src/frontend/views/base_view.cpp"
 	"src/frontend/views/home/home_view.cpp"
 	"src/frontend/views/settings/settings_view.cpp"
+	"src/frontend/views/sidebar/side_bar_view.cpp"
 	"src/main.cpp"
 	"vendor/glad/src/glad.c"
 	"vendor/imgui/imgui_stdlib.cpp"

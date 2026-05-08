@@ -5,7 +5,7 @@
 #include <frontend/fonts/jbm_reg.h>
 #include <frontend/fonts/font_awesome.hpp>
 
-App::App(fs::path config_dir) : config(config_dir) {}
+App::App(fs::path config_dir) : config(config_dir), sidebar([this]{ open_settings = true; }) {}
 
 void App::init() {
     if(!setup_opengl()) return;
@@ -20,7 +20,17 @@ void App::init() {
 }
 
 void App::render_ui() {
+    sidebar.render(config);
+    ImGui::SameLine();
+
+    ImGui::BeginChild("##maincontent");
     active_view->render(config);
+    ImGui::EndChild();
+
+    if(open_settings) {
+        ImGui::OpenPopup("Settings");
+        open_settings = false;
+    }
     settings_view.render(config);
 }
 

@@ -2,9 +2,9 @@
 #include <backend/config/config.hpp>
 #include <backend/paths.hpp>
 
-#include <frontend/views/base_view.hpp>
 #include <frontend/views/home/home_view.hpp>
 #include <frontend/views/settings/settings_view.hpp>
+#include <frontend/views/sidebar/side_bar_view.hpp>
 
 class App {
 public:
@@ -22,9 +22,11 @@ private:
     void render_ui();
 
     Config config;
+    bool open_settings = false;
 
     BaseView* active_view = nullptr;
 
     HomeView home_view;
     SettingsView settings_view;
+    SideBar sidebar;
 };

@@ -18,10 +18,6 @@ void HomeView::render(Config& cfg) {
     }
     ImGui::SameLine();
     ImGui::Text("\xef\x80\x88 \xef\x80\xad \xef\x83\xa9");
-
-    if(ImGui::Button("\xef\x80\x93")) {
-        ImGui::OpenPopup("Settings");
-    }
 }
 
 void HomeView::on_exit() {
