@@ -14,6 +14,10 @@ public:
     void init();
     void render();
 
+    void set_active_view(BaseView* view);
+    BaseView* get_active_view() const { return active_view; }
+    void open_settings_popup() { open_settings = true; }
+
     GLFWwindow* window = nullptr;
 private:
     bool setup_opengl();

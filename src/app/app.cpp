@@ -5,7 +5,16 @@
 #include <frontend/fonts/jbm_reg.h>
 #include <frontend/fonts/font_awesome.hpp>
 
-App::App(fs::path config_dir) : config(config_dir), sidebar([this]{ open_settings = true; }) {}
+App::App(fs::path config_dir) : config(config_dir), sidebar(this) {
+    sidebar.add_item({"\xef\x80\x95", "Home", &home_view});
+}
+
+void App::set_active_view(BaseView* view) {
+    if(!view || view == active_view) return;
+    if(active_view) active_view->on_exit();
+    active_view = view;
+    active_view->on_enter();
+}
 
 void App::init() {
     if(!setup_opengl()) return;
@@ -17,13 +26,14 @@ void App::init() {
     config.save();
 
     active_view = &home_view;
+    active_view->on_enter();
 }
 
 void App::render_ui() {
     sidebar.render(config);
     ImGui::SameLine();
 
-    ImGui::BeginChild("##maincontent");
+    ImGui::BeginChild("##maincontent", ImVec2(0, 0), ImGuiChildFlags_Borders);
     active_view->render(config);
     ImGui::EndChild();
 

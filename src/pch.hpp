@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <string>
 #include <functional>
+#include <vector>
 
 #include "imgui.h"
 #include "imgui_stdlib.h"

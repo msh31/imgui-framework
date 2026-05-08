@@ -1,21 +1,57 @@
 #include "side_bar_view.hpp"
+#include <constants.hpp>
+#include <app/app.hpp>
 
-SideBar::SideBar(std::function<void()> fun) : fun(fun) {};
+SideBar::SideBar(App* app) : app(app) {}
+
+void SideBar::add_item(Item item) {
+    items.push_back(item);
+}
 
 void SideBar::on_enter() {
 
 }
 
-void SideBar::render(Config& cfg) {
-    ImGui::BeginChild("##sidebar", {100, 0});
-
-    ImGui::Text("FUCK");
-    float button_height = ImGui::GetFrameHeight();
-    ImGui::SetCursorPosY(ImGui::GetWindowHeight() - button_height - ImGui::GetStyle().WindowPadding.y);
-
-    if(ImGui::Button("\xef\x80\x93")) {
-        fun();
+static bool nav_button(const char* icon, const char* label, bool active, float width) {
+    ImGuiStyle& style = ImGui::GetStyle();
+    if(active) {
+        ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonActive]);
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, style.Colors[ImGuiCol_ButtonActive]);
     }
+    ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.0f, 0.5f));
+
+    std::string text = std::format("  {}   {}##nav_{}", icon, label, label);
+    bool clicked = ImGui::Button(text.c_str(), ImVec2(width, 0));
+
+    ImGui::PopStyleVar();
+    if(active) ImGui::PopStyleColor(2);
+    return clicked;
+}
+
+void SideBar::render(Config& cfg) {
+    constexpr float SIDEBAR_W = 180.f;
+    ImGui::BeginChild("##sidebar", {SIDEBAR_W, 0}, ImGuiChildFlags_Borders);
+
+    ImGui::TextDisabled(APP_NAME);
+    ImGui::Separator();
+    ImGui::Spacing();
+
+    BaseView* active = app->get_active_view();
+    float content_w = ImGui::GetContentRegionAvail().x;
+    for(auto& item : items) {
+        if(nav_button(item.icon, item.label, item.view == active, content_w)) {
+            app->set_active_view(item.view);
+        }
+    }
+
+    float btn_h = ImGui::GetFrameHeight();
+    ImGui::SetCursorPosY(ImGui::GetWindowHeight() - btn_h - ImGui::GetStyle().WindowPadding.y);
+
+    ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.0f, 0.5f));
+    if(ImGui::Button("  \xef\x80\x93   Settings", ImVec2(content_w, 0))) {
+        app->open_settings_popup();
+    }
+    ImGui::PopStyleVar();
 
     ImGui::EndChild();
 }

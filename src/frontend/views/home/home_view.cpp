@@ -1,14 +1,10 @@
 #include "home_view.hpp"
-#include <constants.hpp>
 
 void HomeView::on_enter() {
 
 }
 
 void HomeView::render(Config& cfg) {
-    ImGui::Text(APP_NAME);
-    ImGui::Separator();
-
     if(ImGui::Button("Click Me")) {
         std::println("Button 'Click Me' has heen clicked!");
     }
