@@ -17,6 +17,7 @@ static bool nav_button(const char* icon, const char* label, bool active, float w
     if(active) {
         ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonActive]);
         ImGui::PushStyleColor(ImGuiCol_ButtonHovered, style.Colors[ImGuiCol_ButtonActive]);
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
     }
     ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.0f, 0.5f));
 
@@ -24,7 +25,7 @@ static bool nav_button(const char* icon, const char* label, bool active, float w
     bool clicked = ImGui::Button(text.c_str(), ImVec2(width, 0));
 
     ImGui::PopStyleVar();
-    if(active) ImGui::PopStyleColor(2);
+    if(active) ImGui::PopStyleColor(3);
     return clicked;
 }
 
