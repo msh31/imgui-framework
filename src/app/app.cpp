@@ -5,6 +5,8 @@
 #include <frontend/fonts/jbm_reg.h>
 #include <frontend/fonts/font_awesome.hpp>
 
+#include <frontend/notification/notification.hpp>
+
 App::App(fs::path config_dir) : config(config_dir), sidebar(this) {
     sidebar.add_item({"\xef\x80\x95", "Home", &home_view});
     sidebar.add_item({"\xef\x86\x88", "Debug", &debug_view});
@@ -52,6 +54,7 @@ void App::render() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+    Notify::render_notifications();
 
     ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGui::SetNextWindowPos(viewport->Pos);

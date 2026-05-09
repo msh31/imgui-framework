@@ -1,4 +1,5 @@
 #include "debug_view.hpp"
+#include <frontend/notification/notification.hpp>
 
 void DebugView::on_enter() {
 
@@ -14,6 +15,10 @@ void DebugView::render(Config& cfg) {
     }
     ImGui::SameLine();
     ImGui::Text("\xef\x80\x88 \xef\x80\xad \xef\x83\xa9");
+
+    if(ImGui::Button("Test Notification")) {
+        Notify::show_notification("I am a title", "I am the body", 2000);
+    }
 }
 
 void DebugView::on_exit() {
