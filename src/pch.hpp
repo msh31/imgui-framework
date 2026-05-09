@@ -19,6 +19,9 @@
 #include <backend/logger.hpp>  
 #include <spdlog/sinks/daily_file_sink.h>
 
+//since all views need it and im lazy
+#include <frontend/notification/notification.hpp>
+
 namespace fs = std::filesystem;
 #endif
 
