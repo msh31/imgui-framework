@@ -48,6 +48,14 @@ void HomeView::render(Config& cfg) {
     }
     ImGui::SameLine();
     ImGui::Text("| Selected: %s", selected_meat.c_str());
+
+    if(ImGui::RadioButton("RadioButton", radio_toggle)) {
+        radio_toggle = !radio_toggle;
+    }
+    ImGui::SameLine();
+    ImGui::Text("| Status: %b", radio_toggle);
+
+    ImGui::ProgressBar(fmod(ImGui::GetTime() * 0.3f, 1.0f), {300.f, 0.f});
 }
 
 void HomeView::on_exit() {

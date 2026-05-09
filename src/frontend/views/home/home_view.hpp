@@ -30,4 +30,6 @@ class HomeView : public BaseView {
 
         std::vector<std::string> meats = { "beef", "pork", "chicken", "fish" };
         std::string selected_meat = meats[0];
+
+        bool radio_toggle = true;
 };
