@@ -14,5 +14,5 @@ void HomeView::on_exit() {
 }
 
 HomeView::~HomeView() {
-    std::println("goodbye: homeview");
+    SPDLOG_INFO("goodbye: homeview");
 }

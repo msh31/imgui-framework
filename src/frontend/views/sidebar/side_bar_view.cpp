@@ -62,5 +62,5 @@ void SideBar::on_exit() {
 }
 
 SideBar::~SideBar() {
-    std::println("goodbye: sidebar");
+    SPDLOG_INFO("goodbye: sidebar");
 }

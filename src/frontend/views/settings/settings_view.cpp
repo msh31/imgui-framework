@@ -47,5 +47,5 @@ void SettingsView::on_exit() {
 }
 
 SettingsView::~SettingsView() {
-    std::println("goodbye: settingsview");
+    SPDLOG_INFO("goodbye: settingsview");
 }

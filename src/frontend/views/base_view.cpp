@@ -9,5 +9,5 @@ void BaseView::on_exit() {
 }
 
 BaseView::~BaseView() {
-    std::println("goodbye: baseview");
+    SPDLOG_INFO("goodbye: baseview");
 }

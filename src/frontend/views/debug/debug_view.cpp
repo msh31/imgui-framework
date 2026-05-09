@@ -26,5 +26,5 @@ void DebugView::on_exit() {
 }
 
 DebugView::~DebugView() {
-    std::println("goodbye: debugview");
+    SPDLOG_INFO("goodbye: debugview");
 }
