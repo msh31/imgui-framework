@@ -42,6 +42,8 @@ find_package(imgui REQUIRED)
 
 find_package(nlohmann_json REQUIRED)
 
+find_package(spdlog REQUIRED)
+
 # Target: template_app
 set(template_app_SOURCES
 	cmake.toml
@@ -78,6 +80,7 @@ target_link_libraries(template_app PRIVATE
 	glfw
 	imgui::imgui
 	nlohmann_json::nlohmann_json
+	spdlog::spdlog
 )
 
 target_precompile_headers(template_app PRIVATE

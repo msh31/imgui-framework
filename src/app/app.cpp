@@ -1,4 +1,5 @@
 #include "app.hpp"
+#include "backend/paths.hpp"
 #include <constants.hpp>
 
 #include <frontend/theme/theme.hpp>
@@ -27,6 +28,11 @@ void App::init() {
         std::println("Config is missing and could not be generated!");
     }
     config.save();
+
+    auto file_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>((paths::config_dir() / "app.log").string(), 0, 0);
+    auto app_logger = std::make_shared<spdlog::logger>(APP_NAME, spdlog::sinks_init_list{file_sink});
+    spdlog::set_default_logger(app_logger);
+    spdlog::set_pattern("[%l] %d-%m-%Y %H:%M:%S - %v (in: %@)");
 
     active_view = &home_view;
     active_view->on_enter();
@@ -88,7 +94,7 @@ App::~App() {
 
 bool App::setup_opengl() {
     if(!glfwInit()) {
-        std::print("Failed to initialize GLFW.");
+        SPDLOG_CRITICAL("Failed to initialize GLFW.");
         return false;
     }
 
@@ -99,7 +105,7 @@ bool App::setup_opengl() {
 
     window = glfwCreateWindow(DEF_RES_W, DEF_RES_H, APP_NAME, nullptr, nullptr);
     if(window == nullptr) {
-        std::print("Failed to create GLFW window. OpenGL 3.3 support is required!");
+        SPDLOG_CRITICAL("Failed to create GLFW window. OpenGL 3.3 support is required!");
         glfwTerminate();
         return false;
     }
@@ -108,7 +114,7 @@ bool App::setup_opengl() {
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::println("Failed to initialize GLAD");
+        SPDLOG_CRITICAL("Failed to initialize GLAD");
         return false;
     }
 
@@ -132,7 +138,10 @@ bool App::setup_imgui() {
     io.FontDefault = jbm;
 
     ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init();
+    if(!ImGui_ImplOpenGL3_Init()) {
+        SPDLOG_CRITICAL("Failed to initialize ImGui");
+        return false;
+    }
 
     return true;
 }

@@ -8,11 +8,16 @@
 #include <string>
 #include <functional>
 #include <vector>
+#include <deque>
 
 #include "imgui.h"
 #include "imgui_stdlib.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+
+#include <spdlog/spdlog.h>
+#include <backend/logger.hpp>  
+#include <spdlog/sinks/daily_file_sink.h>
 
 namespace fs = std::filesystem;
 #endif

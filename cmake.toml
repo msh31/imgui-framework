@@ -17,6 +17,9 @@ required = true
 [find-package.nlohmann_json]
 required = true
 
+[find-package.spdlog]
+required = true
+
 [variables]
 CMAKE_EXPORT_COMPILE_COMMANDS = true
 
@@ -34,7 +37,7 @@ include-directories = [
     "vendor/glad/include",
 ]
 compile-features = ["cxx_std_23"]
-link-libraries = ["glfw", "imgui::imgui", "nlohmann_json::nlohmann_json"]
+link-libraries = ["glfw", "imgui::imgui", "nlohmann_json::nlohmann_json", "spdlog::spdlog"]
 precompile-headers = ["src/pch.hpp"]
 cmake-after = """
 find_path(IMGUI_INCLUDE_DIR imgui.h REQUIRED)
