@@ -25,4 +25,9 @@ class HomeView : public BaseView {
         int slider_step_i= 1;
         int slider_min_i = 1;
         int slider_max_i = 100;
+
+        float color[4] = {1.f, 1.f, 1.f, 1.f};
+
+        std::vector<std::string> meats = { "beef", "pork", "chicken", "fish" };
+        std::string selected_meat = meats[0];
 };
