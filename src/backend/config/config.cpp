@@ -13,19 +13,19 @@ Config::Config(fs::path config_dir) : config_file(config_dir / "config.json") {
     try {
         if(!fs::exists(config_dir)) {
             if(!fs::create_directories(config_dir)) {
-                std::println("Failed to create backup directory");
+                SPDLOG_CRITICAL("Failed to create config directory");
             }
         }
 
         if(!fs::exists(paths::cache_dir())) {
             if(!fs::create_directories(paths::cache_dir())) {
-                std::println("Failed to create cache directory");
+                SPDLOG_WARN("Failed to create cache directory");
             }
         }
 
         load();
     } catch (const std::exception& err) {
-        std::println("config constructor: {}", err.what());
+        SPDLOG_CRITICAL("config constructor: {}", err.what());
     }
 }
 
@@ -33,7 +33,7 @@ Config::~Config() {
     try {
         save();
     } catch (const std::exception& err) {
-        std::println("config destructor: {}", err.what());
+        SPDLOG_CRITICAL("config destructor: {}", err.what());
     }
 }
 
@@ -59,12 +59,12 @@ void Config::load() {
 
     std::ifstream file(config_file.c_str());
     if(!file.is_open()) {
-        std::println("Failed to open config!");
+        SPDLOG_ERROR("Failed to open config!");
         return;
     }
 
     try {
         data = json::parse(file);
         settings.dark_mode = data.value("dark_mode", true);
-    } catch(json::exception& ex) { std::println("config parsing error: {}", ex.what()); }
+    } catch(json::exception& ex) { SPDLOG_CRITICAL("config parsing error: {}", ex.what()); }
 }

@@ -23,7 +23,7 @@ void App::init() {
     if(!setup_imgui()) return;
 
     if(!config.init()) {
-        std::println("Config is missing and could not be generated!");
+        SPDLOG_ERROR("Config is missing and could not be generated!");
     }
     config.save();
 
