@@ -6,6 +6,8 @@ void DebugView::on_enter() {
 }
 
 void DebugView::render(Config& cfg) {
+    task_runner.update(); //needs a refactor but fine for now
+
     if(ImGui::Button("Click Me")) {
         Notify::show_notification("", "Click Me button has been clicked!", 2000);
     }
@@ -22,6 +24,13 @@ void DebugView::render(Config& cfg) {
 
     if(ImGui::Button("Test confirm dialog")) {
         ConfirmDialog::show("Are you sure?", [this]{ Notify::show_notification("Test", "This is a test", 1000); });
+    }
+
+    if(ImGui::Button("Test async task")) {
+        task_runner.run(
+                []{ std::this_thread::sleep_for(std::chrono::seconds(2)); },
+                []{ Notify::show_notification("Async", "Task complete!", 2000); }
+                );
     }
 }
 

@@ -2,6 +2,8 @@
 #include <backend/config/config.hpp>
 #include <backend/paths.hpp>
 
+#include <backend/taskrunner/task_runner.hpp>
+
 #include <frontend/views/home/home_view.hpp>
 #include <frontend/views/settings/settings_view.hpp>
 #include <frontend/views/sidebar/side_bar_view.hpp>
@@ -23,8 +25,9 @@ public:
 private:
     bool setup_opengl();
     bool setup_imgui();
-
     void render_ui();
+
+    TaskRunner task_runner;
 
     Config config;
     bool open_settings = false;
