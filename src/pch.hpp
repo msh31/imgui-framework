@@ -21,6 +21,7 @@
 
 //since all views need it and im lazy
 #include <frontend/notification/notification.hpp>
+#include <frontend/confirmdialog/confirm_dialog.hpp>
 
 namespace fs = std::filesystem;
 #endif

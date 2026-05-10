@@ -49,6 +49,7 @@ set(template_app_SOURCES
 	cmake.toml
 	"src/app/app.cpp"
 	"src/backend/config/config.cpp"
+	"src/frontend/confirmdialog/confirm_dialog.cpp"
 	"src/frontend/notification/notification.cpp"
 	"src/frontend/theme/theme.cpp"
 	"src/frontend/views/base_view.cpp"

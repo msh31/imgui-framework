@@ -19,6 +19,10 @@ void DebugView::render(Config& cfg) {
     if(ImGui::Button("Test Notification")) {
         Notify::show_notification("I am a title", "I am the body", 2000);
     }
+
+    if(ImGui::Button("Test confirm dialog")) {
+        ConfirmDialog::show("Are you sure?", [this]{ Notify::show_notification("Test", "This is a test", 1000); });
+    }
 }
 
 void DebugView::on_exit() {
