@@ -1,5 +1,13 @@
 #include "settings_view.hpp"
 
+#ifdef __APPLE__
+#include <spawn.h>
+#include <sys/wait.h>
+#endif
+#ifdef _WIN32
+#include <shellapi.h>
+#endif
+
 void SettingsView::on_enter() {
 
 }
