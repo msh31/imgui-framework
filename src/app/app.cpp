@@ -12,11 +12,12 @@
 
 void CApp::init() {
     if(!m_config.init()) {
-        SPDLOG_ERROR("Config is missing and could not be generated!");
+        throw std::runtime_error("Config is missing and could not be generated!");
     }
     m_config.save();
 
     setup_logger();
+    ThemeManager::apply_style();
 
     auto* home = m_view_manager.add_view({std::make_unique<HomeView>(), "", "Home"});
     auto* debug = m_view_manager.add_view({std::make_unique<DebugView>(), "", "Debug"});
@@ -25,6 +26,7 @@ void CApp::init() {
 }
 
 void CApp::render() {
+    ThemeManager::apply_colors(ThemeType::Dark); //TODO: copy SM method
     auto active_view = m_view_manager.get_active_view();
     if(active_view == nullptr) {
         throw std::runtime_error("Failed to get active view!");
