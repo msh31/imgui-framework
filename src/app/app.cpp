@@ -8,20 +8,25 @@
 #include <frontend/fonts/font_awesome.hpp>
 
 #include <frontend/views/home/home_view.hpp>
+#include <frontend/views/debug/debug_view.hpp>
 
 void CApp::init() {
-    if(!config.init()) {
+    if(!m_config.init()) {
         SPDLOG_ERROR("Config is missing and could not be generated!");
     }
-    config.save();
+    m_config.save();
 
     setup_logger();
 
-    view_manager.add_view({std::make_unique<HomeView>(), "", "Home"});
+    m_view_manager.add_view({std::make_unique<HomeView>(), "", "Home"});
+    m_view_manager.add_view({std::make_unique<DebugView>(), "", "Debug"});
 }
 
 void CApp::render() {
-    auto active_view = view_manager.get_active_view();
+    // sidebar.render(config);
+    ImGui::SameLine();
+
+    auto active_view = m_view_manager.get_active_view();
     if(active_view == nullptr) {
         throw std::runtime_error("Failed to get active view!");
     }

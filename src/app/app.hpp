@@ -22,9 +22,9 @@ public:
 private:
     void setup_logger();
 
-    Config config;
-    AppContext ctx{&config};
-    CViewManager view_manager;
+    Config m_config;
+    AppContext m_ctx{&m_config};
+    CViewManager m_view_manager;
 
-    TaskRunner task_runner;
+    TaskRunner m_task_runner;
 };
