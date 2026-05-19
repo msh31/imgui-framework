@@ -21,6 +21,7 @@ void CApp::init() {
 
     setup_logger();
     ThemeManager::apply_style();
+    m_font_mgr.load_from_memory("jbm_reg", 16.0f, (void*)jbm_reg);
 
     auto* home = m_view_manager.add_view({std::make_unique<HomeView>(), "", "Home"});
     auto* debug = m_view_manager.add_view({std::make_unique<DebugView>(), "", "Debug"});

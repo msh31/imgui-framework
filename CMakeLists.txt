@@ -56,6 +56,7 @@ set(template_app_SOURCES
 	"src/backend/window/window_manager.cpp"
 	"src/frontend/components/confirmdialog/confirm_dialog.cpp"
 	"src/frontend/components/sidebar/sidebar.cpp"
+	"src/frontend/fonts/font_manager.cpp"
 	"src/frontend/notification/notification.cpp"
 	"src/frontend/theme/theme.cpp"
 	"src/frontend/views/debug/debug_view.cpp"
