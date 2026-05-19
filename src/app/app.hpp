@@ -4,14 +4,10 @@
 
 #include <backend/view_manager/view_manager.hpp>
 #include <backend/taskrunner/task_runner.hpp>
+#include <frontend/components/sidebar/sidebar.hpp>
 
 class CApp {
 public:
-    // CApp() {
-    //
-    // }
-    // ~CApp();
-
     void init();
     void render();
 
@@ -27,4 +23,6 @@ private:
     CViewManager m_view_manager;
 
     TaskRunner m_task_runner;
+
+    CSideBar m_sidebar;
 };

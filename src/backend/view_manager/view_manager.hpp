@@ -1,12 +1,8 @@
 #pragma once
 #include <frontend/views/base_view.hpp>
-#include <frontend/views/sidebar/side_bar_view.hpp>
 
 class CViewManager {
     public:
-        // CViewManager();
-        // ~CViewManager();
-
         struct ViewConfig {
             std::unique_ptr<CBaseView> view;
             const char* icon;

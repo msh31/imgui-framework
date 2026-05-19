@@ -18,19 +18,24 @@ void CApp::init() {
 
     setup_logger();
 
-    m_view_manager.add_view({std::make_unique<HomeView>(), "", "Home"});
-    m_view_manager.add_view({std::make_unique<DebugView>(), "", "Debug"});
+    auto* home = m_view_manager.add_view({std::make_unique<HomeView>(), "", "Home"});
+    auto* debug = m_view_manager.add_view({std::make_unique<DebugView>(), "", "Debug"});
+    m_sidebar.add_item({"\xef\x80\x95", "Home", home});
+    m_sidebar.add_item({"\xef\x86\x88", "Debug", debug});
 }
 
 void CApp::render() {
-    // sidebar.render(config);
-    ImGui::SameLine();
-
     auto active_view = m_view_manager.get_active_view();
     if(active_view == nullptr) {
         throw std::runtime_error("Failed to get active view!");
     }
+
+    auto sidebar_result = m_sidebar.render(active_view);
+    if(sidebar_result != nullptr) m_view_manager.set_active_view(sidebar_result);
+    ImGui::SameLine();
+    ImGui::BeginChild("##maincontent", ImVec2(0, 0), ImGuiChildFlags_Borders);
     active_view->render();
+    ImGui::EndChild();
 }
 
 void CApp::setup_logger() {
