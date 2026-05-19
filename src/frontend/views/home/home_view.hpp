@@ -4,7 +4,7 @@
 class HomeView : public CBaseView {
     public:
         ~HomeView() override; 
-        void render(Config& cfg) override;
+        void render() override;
         void on_enter() override;
         void on_exit() override;
 

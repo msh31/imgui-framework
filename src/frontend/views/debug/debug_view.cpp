@@ -5,7 +5,7 @@ void DebugView::on_enter() {
 
 }
 
-void DebugView::render(Config& cfg) {
+void DebugView::render() {
     task_runner.update(); //needs a refactor but fine for now
 
     if(ImGui::Button("Click Me")) {

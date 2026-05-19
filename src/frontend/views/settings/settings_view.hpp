@@ -4,7 +4,7 @@
 class SettingsView : public CBaseView {
     public:
         ~SettingsView() override; 
-        void render(Config& cfg) override;
+        void render() override;
         void on_enter() override;
         void on_exit() override;
 };

@@ -5,7 +5,7 @@ void HomeView::on_enter() {
     Notify::show_notification("Introduction", std::format("Hello: {}", get_username().c_str()), 1500);
 }
 
-void HomeView::render(Config& cfg) {
+void HomeView::render() {
     ImGui::Text("This is a the home view, you can add new views yourself by exploring the code. It's quite simple.");
 
     if (ImGui::TreeNode("Inputs")) {
