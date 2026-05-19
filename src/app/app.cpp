@@ -57,7 +57,7 @@ void App::render_ui() {
 
 void App::render() {
     glClear(GL_COLOR_BUFFER_BIT);
-    ThemeManager::apply_theme(config.settings.dark_mode ? ThemeType::Dark : ThemeType::Light);
+    // ThemeManager::apply_theme(config.settings.dark_mode ? ThemeType::Dark : ThemeType::Light);
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -84,7 +84,7 @@ void App::render() {
 
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     glfwSwapBuffers(window);
-    glfwPollEvents();
+    glfwWaitEventsTimeout(1.0/60.0);
 }
 
 App::~App() {
