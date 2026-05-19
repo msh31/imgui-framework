@@ -1,5 +1,6 @@
 #include "home_view.hpp"
 #include <backend/utils.hpp>
+#include <frontend/notification/notification.hpp>
 
 void HomeView::on_enter() {
     Notify::show_notification("Introduction", std::format("Hello: {}", get_username().c_str()), 1500);

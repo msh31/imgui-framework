@@ -10,6 +10,9 @@
 #include <frontend/views/home/home_view.hpp>
 #include <frontend/views/debug/debug_view.hpp>
 
+#include <frontend/notification/notification.hpp>
+#include <frontend/components/confirmdialog/confirm_dialog.hpp>
+
 void CApp::init() {
     if(!m_config.init()) {
         throw std::runtime_error("Config is missing and could not be generated!");

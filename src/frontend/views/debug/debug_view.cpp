@@ -1,5 +1,6 @@
 #include "debug_view.hpp"
 #include <frontend/notification/notification.hpp>
+#include <frontend/components/confirmdialog/confirm_dialog.hpp>
 
 void DebugView::on_enter() {
 
