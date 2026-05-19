@@ -7,10 +7,10 @@
 
 class CApp {
 public:
-    CApp() {
-        
-    }
-    ~CApp();
+    // CApp() {
+    //
+    // }
+    // ~CApp();
 
     void init();
     void render();
@@ -20,6 +20,8 @@ public:
     };
 
 private:
+    void setup_logger();
+
     Config config;
     AppContext ctx{&config};
     CViewManager view_manager;

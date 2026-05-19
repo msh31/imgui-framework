@@ -4,8 +4,8 @@
 
 class CViewManager {
     public:
-        CViewManager();
-        ~CViewManager();
+        // CViewManager();
+        // ~CViewManager();
 
         struct ViewConfig {
             std::unique_ptr<CBaseView> view;

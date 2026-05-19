@@ -9,6 +9,8 @@ int main() {
     try {
         CWindowManager window;
         CApp app;
+
+        app.init();
         window.run([&app]{ app.render(); });
     } catch(const std::exception& e) {
         SPDLOG_CRITICAL("Fatal: {}", e.what());

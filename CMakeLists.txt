@@ -57,7 +57,6 @@ set(template_app_SOURCES
 	"src/frontend/confirmdialog/confirm_dialog.cpp"
 	"src/frontend/notification/notification.cpp"
 	"src/frontend/theme/theme.cpp"
-	"src/frontend/views/base_view.cpp"
 	"src/frontend/views/debug/debug_view.cpp"
 	"src/frontend/views/home/home_view.cpp"
 	"src/frontend/views/settings/settings_view.cpp"
