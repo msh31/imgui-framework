@@ -4,7 +4,7 @@
 
 class CViewManager {
     public:
-        CViewManager() : m_sidebar([this](CBaseView* v) { set_active_view(v); }) {};
+        CViewManager();
         ~CViewManager();
 
         struct ViewConfig {
@@ -13,7 +13,6 @@ class CViewManager {
             const char* label;
         };
 
-        void render();
         CBaseView* add_view(ViewConfig v_cfg);
 
         CBaseView* get_active_view() const { return m_active_view; }
@@ -23,7 +22,4 @@ class CViewManager {
     private:
         CBaseView* m_active_view = nullptr;
         std::vector<std::unique_ptr<CBaseView>> m_registered_views;
-
-//UI components
-    CSideBar m_sidebar;
 };

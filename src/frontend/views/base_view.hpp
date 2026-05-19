@@ -4,7 +4,7 @@
 class CBaseView {
     public:
         virtual ~CBaseView();
-        virtual void render(Config& cfg) = 0;
+        virtual void render() = 0;
         virtual void on_enter();
         virtual void on_exit();
 

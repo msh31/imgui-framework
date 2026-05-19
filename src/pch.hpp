@@ -20,7 +20,7 @@
 #include <backend/logger.hpp>  
 #include <spdlog/sinks/daily_file_sink.h>
 
-//since all views need it and im lazy
+//since all views need it and im lazy - for now
 #include <frontend/notification/notification.hpp>
 #include <frontend/confirmdialog/confirm_dialog.hpp>
 

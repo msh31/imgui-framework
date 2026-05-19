@@ -25,28 +25,4 @@ static bool nav_button(const char* icon, const char* label, bool active, float w
 }
 
 void CSideBar::render(Config& cfg) {
-    constexpr float SIDEBAR_W = 180.f;
-    ImGui::BeginChild("##sidebar", {SIDEBAR_W, 0}, ImGuiChildFlags_Borders);
-
-    ImGui::TextDisabled(APP_NAME);
-    ImGui::Separator();
-    ImGui::Spacing();
-
-    // CBaseView* active = app->get_active_view();
-    float content_w = ImGui::GetContentRegionAvail().x;
-    for(auto& item : m_items) {
-        // if(nav_button(item.icon, item.label, item.view == active, content_w)) {
-        //     // app->set_active_view(item.view);
-        // }
-    }
-
-    float btn_h = ImGui::GetFrameHeight();
-    ImGui::SetCursorPosY(ImGui::GetWindowHeight() - btn_h - ImGui::GetStyle().WindowPadding.y);
-
-    ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.0f, 0.5f));
-    if(ImGui::Button("  \xef\x80\x93   Settings", ImVec2(content_w, 0))) {
-        // app->open_settings_popup();
-    }
-    ImGui::PopStyleVar();
-    ImGui::EndChild();
 }
