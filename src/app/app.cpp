@@ -36,6 +36,9 @@ void CApp::render() {
     ImGui::BeginChild("##maincontent", ImVec2(0, 0), ImGuiChildFlags_Borders);
     active_view->render();
     ImGui::EndChild();
+
+    Notify::render_notifications();
+    ConfirmDialog::render();
 }
 
 void CApp::setup_logger() {

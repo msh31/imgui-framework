@@ -13,10 +13,6 @@ void CWindowManager::run(std::function<void()> fun) {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-//TODO: move this? - it works but is odd to throw in here
-        Notify::render_notifications();
-        ConfirmDialog::render();
-
         ImGuiViewport* viewport = ImGui::GetMainViewport();
         ImGui::SetNextWindowPos(viewport->Pos);
         ImGui::SetNextWindowSize(viewport->Size);
