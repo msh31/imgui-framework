@@ -1,14 +1,13 @@
 #include "side_bar_view.hpp"
 #include <constants.hpp>
-#include <app/app.hpp>
 
-SideBar::SideBar(App* app) : app(app) {}
+CSideBar::CSideBar(std::function<void(CBaseView*)> fun) {}
 
-void SideBar::add_item(Item item) {
-    items.push_back(item);
+void CSideBar::add_item(ViewItem item) {
+    m_items.push_back(item);
 }
 
-void SideBar::on_enter() {
+void CSideBar::on_enter() {
 
 }
 
@@ -29,7 +28,7 @@ static bool nav_button(const char* icon, const char* label, bool active, float w
     return clicked;
 }
 
-void SideBar::render(Config& cfg) {
+void CSideBar::render(Config& cfg) {
     constexpr float SIDEBAR_W = 180.f;
     ImGui::BeginChild("##sidebar", {SIDEBAR_W, 0}, ImGuiChildFlags_Borders);
 
@@ -37,12 +36,12 @@ void SideBar::render(Config& cfg) {
     ImGui::Separator();
     ImGui::Spacing();
 
-    BaseView* active = app->get_active_view();
+    // CBaseView* active = app->get_active_view();
     float content_w = ImGui::GetContentRegionAvail().x;
-    for(auto& item : items) {
-        if(nav_button(item.icon, item.label, item.view == active, content_w)) {
-            app->set_active_view(item.view);
-        }
+    for(auto& item : m_items) {
+        // if(nav_button(item.icon, item.label, item.view == active, content_w)) {
+        //     // app->set_active_view(item.view);
+        // }
     }
 
     float btn_h = ImGui::GetFrameHeight();
@@ -50,17 +49,16 @@ void SideBar::render(Config& cfg) {
 
     ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.0f, 0.5f));
     if(ImGui::Button("  \xef\x80\x93   Settings", ImVec2(content_w, 0))) {
-        app->open_settings_popup();
+        // app->open_settings_popup();
     }
     ImGui::PopStyleVar();
-
     ImGui::EndChild();
 }
 
-void SideBar::on_exit() {
+void CSideBar::on_exit() {
 
 }
 
-SideBar::~SideBar() {
+CSideBar::~CSideBar() {
     SPDLOG_INFO("goodbye: sidebar");
 }

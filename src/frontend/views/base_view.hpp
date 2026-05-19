@@ -1,10 +1,16 @@
 #pragma once
 #include <backend/config/config.hpp>
 
-class BaseView {
+class CBaseView {
     public:
-        virtual ~BaseView();
+        virtual ~CBaseView();
         virtual void render(Config& cfg) = 0;
         virtual void on_enter();
         virtual void on_exit();
+
+        struct ViewItem {
+            const char* icon;
+            const char* label;
+            CBaseView* view;
+        };
 };

@@ -1,25 +1,14 @@
 #pragma once
 #include <frontend/views/base_view.hpp>
 
-class App;
-
-class SideBar : public BaseView {
+//widget - to be moved
+class CSideBar {
     public:
-        struct Item {
-            const char* icon;
-            const char* label;
-            BaseView* view;
-        };
+        explicit CSideBar(std::function<void(CBaseView*)> fun);
+        void render(Config& cfg);
 
-        explicit SideBar(App* app);
-        ~SideBar() override;
-        void render(Config& cfg) override;
-        void on_enter() override;
-        void on_exit() override;
-
-        void add_item(Item item);
+        void add_item(CBaseView::ViewItem item);
 
     private:
-        App* app;
-        std::vector<Item> items;
+        std::vector<CBaseView::ViewItem> m_items;
 };

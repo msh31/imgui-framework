@@ -10,6 +10,8 @@
 #include <vector>
 #include <deque>
 #include <future>
+#include <stdexcept>
+#include <memory>
 
 #include "imgui.h"
 #include "imgui_stdlib.h"

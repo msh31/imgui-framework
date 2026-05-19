@@ -1,8 +1,5 @@
 #include "app.hpp"
 
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-
 #include "backend/paths.hpp"
 #include <constants.hpp>
 
@@ -10,22 +7,19 @@
 #include <frontend/fonts/jbm_reg.h>
 #include <frontend/fonts/font_awesome.hpp>
 
-App::App(fs::path config_dir) : config(config_dir), sidebar(this) {
-    sidebar.add_item({"\xef\x80\x95", "Home", &home_view});
-    sidebar.add_item({"\xef\x86\x88", "Debug", &debug_view});
-}
+// CApp::CApp(fs::path config_dir) : config(config_dir), sidebar(this) {
+//     sidebar.add_item({"\xef\x80\x95", "Home", &home_view});
+//     sidebar.add_item({"\xef\x86\x88", "Debug", &debug_view});
+// }
+//
+// void CApp::set_active_view(BaseView* view) {
+//     if(!view || view == active_view) return;
+//     if(active_view) active_view->on_exit();
+//     active_view = view;
+//     active_view->on_enter();
+// }
 
-void App::set_active_view(BaseView* view) {
-    if(!view || view == active_view) return;
-    if(active_view) active_view->on_exit();
-    active_view = view;
-    active_view->on_enter();
-}
-
-void App::init() {
-    if(!setup_opengl()) return;
-    if(!setup_imgui()) return;
-
+void CApp::init() {
     if(!config.init()) {
         SPDLOG_ERROR("Config is missing and could not be generated!");
     }
@@ -36,115 +30,25 @@ void App::init() {
     spdlog::set_default_logger(app_logger);
     spdlog::set_pattern("[%l] %d-%m-%Y %H:%M:%S - %v (in: %@)");
 
-    active_view = &home_view;
-    active_view->on_enter();
+    // active_view = &home_view;
+    // active_view->on_enter();
 }
 
-void App::render_ui() {
-    sidebar.render(config);
-    ImGui::SameLine();
-
-    ImGui::BeginChild("##maincontent", ImVec2(0, 0), ImGuiChildFlags_Borders);
-    active_view->render(config);
-    ImGui::EndChild();
-
-    if(open_settings) {
-        ImGui::OpenPopup("Settings");
-        open_settings = false;
-    }
-    settings_view.render(config);
+void CApp::render() {
+    
 }
 
-void App::render() {
-    glClear(GL_COLOR_BUFFER_BIT);
-    // ThemeManager::apply_theme(config.settings.dark_mode ? ThemeType::Dark : ThemeType::Light);
-
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-    Notify::render_notifications();
-    ConfirmDialog::render();
-
-    ImGuiViewport* viewport = ImGui::GetMainViewport();
-    ImGui::SetNextWindowPos(viewport->Pos);
-    ImGui::SetNextWindowSize(viewport->Size);
-    //ImGui::SetNextWindowViewport(viewport->ID);
-
-    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar |
-        ImGuiWindowFlags_NoResize |
-        ImGuiWindowFlags_NoMove |
-        ImGuiWindowFlags_NoCollapse |
-        ImGuiWindowFlags_NoBringToFrontOnFocus |
-        ImGuiWindowFlags_NoNavFocus;
-
-    ImGui::Begin("Main Window", nullptr, window_flags);
-    App::render_ui();
-    ImGui::End();
-    ImGui::Render();
-
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    glfwSwapBuffers(window);
-    glfwWaitEventsTimeout(1.0/60.0);
-}
-
-App::~App() {
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-    glfwDestroyWindow(window);
-    glfwTerminate();
-}
-
-bool App::setup_opengl() {
-    if(!glfwInit()) {
-        SPDLOG_CRITICAL("Failed to initialize GLFW.");
-        return false;
-    }
-
-    glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing (MSAA)
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // no old OpenGL
-
-    window = glfwCreateWindow(DEF_RES_W, DEF_RES_H, APP_NAME, nullptr, nullptr);
-    if(window == nullptr) {
-        SPDLOG_CRITICAL("Failed to create GLFW window. OpenGL 3.3 support is required!");
-        glfwTerminate();
-        return false;
-    }
-
-    glfwSetWindowSizeLimits(window, MIN_RES_W, MIN_RES_H, MAX_RES_W, MAX_RES_H); 
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
-    if (!gladLoadGL(glfwGetProcAddress)) {
-        SPDLOG_CRITICAL("Failed to initialize GLAD");
-        return false;
-    }
-
-    return true;
-}
-
-bool App::setup_imgui() {
-    ImGui::CreateContext();
-
-    ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-
-    ImFontConfig font_cfg;
-    font_cfg.FontDataOwnedByAtlas = false;
-
-    ImFont* jbm = io.Fonts->AddFontFromMemoryTTF((void*)jbm_reg, jbm_reg_len, 16.0f, &font_cfg);
-    font_cfg.MergeMode = true;
-    font_cfg.GlyphMinAdvanceX = 16.0f;
-    static const ImWchar icon_ranges[] = {0xf000, 0xf2e0, 0};
-    io.Fonts->AddFontFromMemoryTTF((void*)font_awesome, font_awesome_len, 16.0f, &font_cfg, icon_ranges);
-    io.FontDefault = jbm;
-
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    if(!ImGui_ImplOpenGL3_Init()) {
-        SPDLOG_CRITICAL("Failed to initialize ImGui");
-        return false;
-    }
-
-    return true;
-}
+// void CApp::render_ui() {
+//     sidebar.render(config);
+//     ImGui::SameLine();
+//
+//     ImGui::BeginChild("##maincontent", ImVec2(0, 0), ImGuiChildFlags_Borders);
+//     active_view->render(config);
+//     ImGui::EndChild();
+//
+//     if(open_settings) {
+//         ImGui::OpenPopup("Settings");
+//         open_settings = false;
+//     }
+//     settings_view.render(config);
+// }

@@ -4,39 +4,15 @@
 
 #include <backend/taskrunner/task_runner.hpp>
 
-#include <frontend/views/home/home_view.hpp>
-#include <frontend/views/settings/settings_view.hpp>
-#include <frontend/views/sidebar/side_bar_view.hpp>
-#include <frontend/views/debug/debug_view.hpp>
-
-class App {
+class CApp {
 public:
-    App(fs::path config_dir = paths::config_dir());
-    ~App();
+    CApp(fs::path config_dir = paths::config_dir());
+    ~CApp();
 
     void init();
     void render();
 
-    void set_active_view(BaseView* view);
-    BaseView* get_active_view() const { return active_view; }
-    void open_settings_popup() { open_settings = true; }
-
-    GLFWwindow* window = nullptr;
 private:
-    bool setup_opengl();
-    bool setup_imgui();
-    void render_ui();
-
-    TaskRunner task_runner;
-
     Config config;
-    bool open_settings = false;
-
-    BaseView* active_view = nullptr;
-
-    HomeView home_view;
-    DebugView debug_view;
-
-    SettingsView settings_view;
-    SideBar sidebar;
+    TaskRunner task_runner;
 };

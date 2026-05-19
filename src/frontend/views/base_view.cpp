@@ -1,13 +1,13 @@
 #include "base_view.hpp"
 
-void BaseView::on_enter() {
+void CBaseView::on_enter() {
 
 }
 
-void BaseView::on_exit() {
+void CBaseView::on_exit() {
 
 }
 
-BaseView::~BaseView() {
+CBaseView::~CBaseView() {
     SPDLOG_INFO("goodbye: baseview");
 }
