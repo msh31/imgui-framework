@@ -6,8 +6,8 @@
 
 class CApp {
 public:
-    CApp(fs::path config_dir = paths::config_dir());
-    ~CApp();
+    // CApp(fs::path config_dir = paths::config_dir());
+    // ~CApp();
 
     void init();
     void render();
