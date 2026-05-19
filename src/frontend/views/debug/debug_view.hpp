@@ -2,7 +2,7 @@
 #include <frontend/views/base_view.hpp>
 #include <backend/taskrunner/task_runner.hpp>
 
-class DebugView : public BaseView {
+class DebugView : public CBaseView {
     public:
         ~DebugView() override; 
         void render(Config& cfg) override;

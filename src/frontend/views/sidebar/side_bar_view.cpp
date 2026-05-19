@@ -3,12 +3,8 @@
 
 CSideBar::CSideBar(std::function<void(CBaseView*)> fun) {}
 
-void CSideBar::add_item(ViewItem item) {
+void CSideBar::add_item(CBaseView::ViewItem item) {
     m_items.push_back(item);
-}
-
-void CSideBar::on_enter() {
-
 }
 
 static bool nav_button(const char* icon, const char* label, bool active, float width) {
@@ -53,12 +49,4 @@ void CSideBar::render(Config& cfg) {
     }
     ImGui::PopStyleVar();
     ImGui::EndChild();
-}
-
-void CSideBar::on_exit() {
-
-}
-
-CSideBar::~CSideBar() {
-    SPDLOG_INFO("goodbye: sidebar");
 }

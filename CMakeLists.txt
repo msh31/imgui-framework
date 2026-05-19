@@ -52,6 +52,8 @@ set(template_app_SOURCES
 	"src/app/app.cpp"
 	"src/backend/config/config.cpp"
 	"src/backend/taskrunner/task_runner.cpp"
+	"src/backend/view_manager/view_manager.cpp"
+	"src/backend/window/window_manager.cpp"
 	"src/frontend/confirmdialog/confirm_dialog.cpp"
 	"src/frontend/notification/notification.cpp"
 	"src/frontend/theme/theme.cpp"

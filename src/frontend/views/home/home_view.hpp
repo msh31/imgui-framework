@@ -1,7 +1,7 @@
 #pragma once
 #include <frontend/views/base_view.hpp>
 
-class HomeView : public BaseView {
+class HomeView : public CBaseView {
     public:
         ~HomeView() override; 
         void render(Config& cfg) override;
