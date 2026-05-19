@@ -11,9 +11,10 @@ class DesktopAppTemplate(ConanFile):
         deps.generate()
 
     def requirements(self):
-        self.requires("imgui/1.92.6")
+        self.requires("glad/2.0.8")
         self.requires("glfw/3.4")
         self.requires("opengl/system")
+        self.requires("imgui/1.92.6")
         self.requires("nlohmann_json/3.12.0")
         self.requires("spdlog/1.17.0")
 

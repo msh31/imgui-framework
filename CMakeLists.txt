@@ -36,6 +36,8 @@ project(desktop-app-template
 )
 
 # Packages
+find_package(glad REQUIRED)
+
 find_package(glfw3 REQUIRED)
 
 find_package(imgui REQUIRED)
@@ -59,7 +61,6 @@ set(template_app_SOURCES
 	"src/frontend/views/settings/settings_view.cpp"
 	"src/frontend/views/sidebar/side_bar_view.cpp"
 	"src/main.cpp"
-	"vendor/glad/src/glad.c"
 	"vendor/imgui/imgui_stdlib.cpp"
 )
 
@@ -75,10 +76,10 @@ target_compile_features(template_app PRIVATE
 target_include_directories(template_app PRIVATE
 	src
 	"vendor/imgui"
-	"vendor/glad/include"
 )
 
 target_link_libraries(template_app PRIVATE
+	glad::glad
 	glfw
 	imgui::imgui
 	nlohmann_json::nlohmann_json

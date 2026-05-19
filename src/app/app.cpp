@@ -1,4 +1,8 @@
 #include "app.hpp"
+
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 #include "backend/paths.hpp"
 #include <constants.hpp>
 
@@ -112,7 +116,7 @@ bool App::setup_opengl() {
     glfwSetWindowSizeLimits(window, MIN_RES_W, MIN_RES_H, MAX_RES_W, MAX_RES_H); 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    if (!gladLoadGL(glfwGetProcAddress)) {
         SPDLOG_CRITICAL("Failed to initialize GLAD");
         return false;
     }

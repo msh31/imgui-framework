@@ -8,15 +8,14 @@ name = "desktop-app-template"
 description = "A simple template for cross-platform apps in C++"
 languages = ["C", "CXX"]
 
+[find-package.glad]
+required = true
 [find-package.glfw3]
 required = true
-
 [find-package.imgui]
 required = true
-
 [find-package.nlohmann_json]
 required = true
-
 [find-package.spdlog]
 required = true
 
@@ -29,15 +28,13 @@ sources = [
     "src/**.cpp",
 
     "vendor/imgui/imgui_stdlib.cpp",
-    "vendor/glad/src/glad.c",
 ]
 include-directories = [
     "src",
     "vendor/imgui",
-    "vendor/glad/include",
 ]
 compile-features = ["cxx_std_23"]
-link-libraries = ["glfw", "imgui::imgui", "nlohmann_json::nlohmann_json", "spdlog::spdlog"]
+link-libraries = ["glad::glad", "glfw", "imgui::imgui", "nlohmann_json::nlohmann_json", "spdlog::spdlog"]
 precompile-headers = ["src/pch.hpp"]
 cmake-after = """
 find_path(IMGUI_INCLUDE_DIR imgui.h REQUIRED)
