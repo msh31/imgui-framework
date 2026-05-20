@@ -9,7 +9,8 @@ void HomeView::on_enter() {
 void HomeView::render() {
     ImGui::Text("This is a the home view, you can add new views yourself by exploring the code. It's quite simple.");
 
-    if (ImGui::TreeNode("Inputs")) {
+    ImGuiTreeNodeFlags tree_flag = ImGuiTreeNodeFlags_DefaultOpen;
+    if (ImGui::TreeNodeEx("Inputs", tree_flag)) {
         ImGui::PushItemWidth(150.0f);
         ImGui::InputText("InputText", &input_str);
         ImGui::InputDouble("InputDouble", &input_double);
@@ -27,7 +28,7 @@ void HomeView::render() {
         ImGui::TreePop();
     }
 
-    if (ImGui::TreeNode("Selection")) {
+    if (ImGui::TreeNodeEx("Selection", tree_flag)) {
         ImGui::Checkbox("Checkbox", &checkbox_toggle);
 
         ImGui::SetNextItemWidth(200.0f);
@@ -60,7 +61,7 @@ void HomeView::render() {
         ImGui::TreePop();
     }
 
-    if (ImGui::TreeNode("Color && Progress")) {
+    if (ImGui::TreeNodeEx("Color && Progress", tree_flag)) {
         ImGui::ColorEdit4("Color Picker", color);
 
         ImGui::ProgressBar(fmod(ImGui::GetTime() * 0.3f, 1.0f), {300.f, 0.f});
