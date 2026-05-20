@@ -14,6 +14,8 @@
 #include <memory>
 #include <unordered_set>
 #include <fstream>
+#include <expected>
+#include <regex>
 
 #include "imgui.h"
 #include "imgui_stdlib.h"
@@ -23,6 +25,8 @@
 #include <spdlog/sinks/daily_file_sink.h>
 
 namespace fs = std::filesystem;
+
+#include <types.hpp> //holds custom types defined by the application
 #endif
 
 #include <KHR/khrplatform.h>
