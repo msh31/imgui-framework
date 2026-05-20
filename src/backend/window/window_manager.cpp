@@ -1,7 +1,6 @@
 #include "window_manager.hpp"
 #include <constants.hpp>
 
-// #include <frontend/theme/theme.hpp>
 #include <frontend/fonts/jbm_reg.h>
 #include <frontend/fonts/font_awesome.hpp>
 

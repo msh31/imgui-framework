@@ -21,7 +21,7 @@ CBaseView* CSideBar::render(CBaseView* active) {
     ImGui::SetCursorPosY(ImGui::GetWindowHeight() - btn_h - ImGui::GetStyle().WindowPadding.y);
     ImGui::PushStyleVar(ImGuiStyleVar_ButtonTextAlign, ImVec2(0.0f, 0.5f));
     if(ImGui::Button("  \xef\x80\x93   Settings", ImVec2(content_w, 0))) {
-        // app->open_settings_popup();
+        r_item = m_settings;
     }
     ImGui::PopStyleVar();
     ImGui::EndChild();
@@ -30,6 +30,10 @@ CBaseView* CSideBar::render(CBaseView* active) {
 
 void CSideBar::add_item(CBaseView::ViewItem item) {
     m_items.push_back(item);
+}
+
+void CSideBar::set_settings_view(CBaseView* view) {
+    m_settings = view;
 }
 
 bool CSideBar::nav_button(const char* icon, const char* label, bool active, float width) {

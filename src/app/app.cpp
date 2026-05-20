@@ -9,12 +9,13 @@
 
 #include <frontend/views/home/home_view.hpp>
 #include <frontend/views/debug/debug_view.hpp>
+#include <frontend/views/settings/settings_view.hpp>
 
 #include <frontend/notification/notification.hpp>
 #include <frontend/dialogs/confirm/confirm_dialog.hpp>
 
 void CApp::init() {
-    if(!m_config.init()) {
+    if(!m_config.init()) { 
         throw std::runtime_error("Config is missing and could not be generated!");
     }
     m_config.save();
@@ -24,12 +25,16 @@ void CApp::init() {
 
     auto* home = m_view_manager.add_view({std::make_unique<HomeView>(), "", "Home"});
     auto* debug = m_view_manager.add_view({std::make_unique<DebugView>(), "", "Debug"});
+    auto* settings = m_view_manager.add_view({std::make_unique<SettingsView>(m_config), "", "Settings"});
+
     m_sidebar.add_item({"\xef\x80\x95", "Home", home});
     m_sidebar.add_item({"\xef\x86\x88", "Debug", debug});
+    m_sidebar.set_settings_view(settings);
 }
 
 void CApp::render() {
-    ThemeManager::apply_colors(ThemeType::Dark); //TODO: copy SM method
+    ThemeManager::apply_colors(m_config.settings.dark_mode ? ThemeType::Dark : ThemeType::Light);
+
     auto active_view = m_view_manager.get_active_view();
     if(active_view == nullptr) {
         throw std::runtime_error("Failed to get active view!");
