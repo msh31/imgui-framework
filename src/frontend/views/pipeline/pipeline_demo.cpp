@@ -34,17 +34,29 @@ void CPipelineView::render() {
 
     if(m_result) {
         ImGui::Text("Output: %s", m_result->c_str());
+        m_has_logged_error = false;
     } else {
-        SPDLOG_CRITICAL("pipeline error: {}", pe_to_string(m_result.error()));
+        switch(m_result.error()) {
+            case EMPTY_INPUT:
+                break;
+            case PROCESSING_FAILURE:
+                if(!m_has_logged_error) {
+                    SPDLOG_ERROR("pipeline error: {}", pe_to_string(m_result.error()));
+                    m_has_logged_error = true;
+                }
+                break;
+            case INVALID_STATE:
+                throw std::runtime_error("Pipeline is in an invalid state!");
+        }
         return;
     }
 }
 
 std::string_view CPipelineView::pe_to_string(PipelineError e) {
     switch(e) {
-        case PipelineError::EMPTY_INPUT: return "EmptyInput";
-        case PipelineError::PROCESSING_FAILURE: return "ProcessingFailed";
-        case PipelineError::INVALID_STATE: return "InvalidState";
+        case PipelineError::EMPTY_INPUT: return "Pipeline was given no input, this is not a big problem.";
+        case PipelineError::PROCESSING_FAILURE: return "Pipeline failed during processign the input, this is a problem.";
+        case PipelineError::INVALID_STATE: return "Pipeline has an invalid state, the program cannot continue.";
     }
 }
 
