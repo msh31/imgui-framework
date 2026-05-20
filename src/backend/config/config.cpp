@@ -13,17 +13,16 @@ Config::Config(fs::path config_dir) : config_file(config_dir / "config.json") {
     try {
         if(!fs::exists(config_dir)) {
             if(!fs::create_directories(config_dir)) {
-                SPDLOG_CRITICAL("Failed to create config directory");
+                throw std::runtime_error("Failed to create config directory");
             }
         }
-
-        if(!fs::exists(paths::cache_dir())) {
-            if(!fs::create_directories(paths::cache_dir())) {
-                SPDLOG_WARN("Failed to create cache directory");
-            }
-        }
-
         load();
+
+        // if(!fs::exists(paths::cache_dir())) {
+        //     if(!fs::create_directories(paths::cache_dir())) {
+        //         SPDLOG_WARN("Failed to create cache directory");
+        //     }
+        // }
     } catch (const std::exception& err) {
         SPDLOG_CRITICAL("config constructor: {}", err.what());
     }
