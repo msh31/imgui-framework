@@ -1,6 +1,7 @@
 *.ini
 .cache/
 .DS_Store
+CMakeUserPresets
 
 # auto generated
 vcpkg.json
