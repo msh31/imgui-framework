@@ -8,7 +8,7 @@
 
 using json = nlohmann::json;
 
-Config::Config(fs::path config_dir) : config_file(config_dir / "config.json") {
+CConfig::CConfig(fs::path config_dir) : m_config_file(config_dir / "config.json") {
     try {
         if(!fs::exists(config_dir)) {
             if(!fs::create_directories(config_dir)) {
@@ -28,7 +28,7 @@ Config::Config(fs::path config_dir) : config_file(config_dir / "config.json") {
     }
 }
 
-Config::~Config() {
+CConfig::~CConfig() {
     try {
         save();
     } catch (const std::exception& err) {
@@ -36,18 +36,18 @@ Config::~Config() {
     }
 }
 
-void Config::save() {
+void CConfig::save() {
     json data;
     data["dark_mode"] = settings.dark_mode;
 
-    std::ofstream file(config_file);
+    std::ofstream file(m_config_file);
     file << data.dump(4);
 }
 
-void Config::load() {
+void CConfig::load() {
     json data;
 
-    std::ifstream file(config_file.c_str());
+    std::ifstream file(m_config_file.c_str());
     if(!file.is_open()) {
         SPDLOG_ERROR("Failed to open config!");
         return;

@@ -19,13 +19,13 @@ void CApp::init() {
     setup_logger();
     ThemeManager::apply_style();
 
-    auto* home = m_view_manager.add_view({std::make_unique<HomeView>(), "", "Home"});
+    auto* home = m_view_manager.add_view({std::make_unique<CHomeView>(), "", "Home"});
     auto* demo = m_view_manager.add_view({std::make_unique<CPipelineView>(), "", "Pipeline Demo"});
-    auto* debug = m_view_manager.add_view({std::make_unique<DebugView>(), "", "Debug"});
-    auto* settings = m_view_manager.add_view({std::make_unique<SettingsView>(m_config), "", "Settings"});
+    auto* debug = m_view_manager.add_view({std::make_unique<CDebugView>(), "", "Debug"});
+    auto* settings = m_view_manager.add_view({std::make_unique<CSettingsView>(m_config), "", "Settings"});
 
     m_sidebar.add_item({"\xef\x80\x95", "Home", home});
-    m_sidebar.add_item({"\xef\x80\x95", "Pipeline Demo", demo});
+    m_sidebar.add_item({"\xef\x83\xa8", "Pipeline Demo", demo});
     m_sidebar.add_item({"\xef\x86\x88", "Debug", debug});
     m_sidebar.set_settings_view(settings);
 }

@@ -13,17 +13,17 @@ public:
     void render();
 
     struct AppContext {
-        Config* config;
+        CConfig* config;
     };
 
 private:
     void setup_logger();
 
-    Config m_config;
+    CConfig m_config;
     AppContext m_ctx{&m_config};
     CViewManager m_view_manager;
 
-    TaskRunner m_task_runner;
+    CTaskRunner m_task_runner;
 
     CSideBar m_sidebar;
 };

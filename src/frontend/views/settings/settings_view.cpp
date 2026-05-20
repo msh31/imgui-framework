@@ -8,13 +8,13 @@
 #include <shellapi.h>
 #endif
 
-SettingsView::SettingsView(Config& cfg) : m_config(cfg) {};
+CSettingsView::CSettingsView(CConfig& cfg) : m_config(cfg) {};
 
-void SettingsView::on_enter() {
+void CSettingsView::on_enter() {
 
 }
 
-void SettingsView::render() {
+void CSettingsView::render() {
     ImGui::Checkbox("Dark Mode", &m_config.settings.dark_mode);
 
     if(ImGui::Button("Open config")) {
@@ -43,10 +43,10 @@ void SettingsView::render() {
     ImGui::SetItemTooltip("Opens your file manager to the config directory.");
 }
 
-void SettingsView::on_exit() {
+void CSettingsView::on_exit() {
 
 }
 
-SettingsView::~SettingsView() {
+CSettingsView::~CSettingsView() {
     SPDLOG_INFO("goodbye: settingsview");
 }

@@ -1,14 +1,14 @@
 #pragma once
 #include <frontend/views/base_view.hpp>
 
-class SettingsView : public CBaseView {
+class CSettingsView : public CBaseView {
     public:
-        SettingsView(Config& cfg);
-        ~SettingsView() override; 
+        CSettingsView(CConfig& cfg);
+        ~CSettingsView() override; 
         void render() override;
         void on_enter() override;
         void on_exit() override;
 
     private:
-        Config& m_config;
+        CConfig& m_config;
 };

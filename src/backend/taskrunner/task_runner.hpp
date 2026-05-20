@@ -1,6 +1,6 @@
 #pragma once
 
-class TaskRunner {
+class CTaskRunner {
     public:
         void run(std::function<void()> work, std::function<void()> on_complete);
         void update();
@@ -11,5 +11,5 @@ class TaskRunner {
             std::function<void()> on_complete;
         };
 
-        std::vector<Task> tasks;
+        std::vector<Task> m_tasks;
 };

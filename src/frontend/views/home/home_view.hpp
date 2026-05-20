@@ -1,35 +1,35 @@
 #pragma once
 #include <frontend/views/base_view.hpp>
 
-class HomeView : public CBaseView {
+class CHomeView : public CBaseView {
     public:
-        ~HomeView() override; 
+        ~CHomeView() override; 
         void render() override;
         void on_enter() override;
         void on_exit() override;
 
     private:
-        std::string input_str = {};
-        double input_double = 0.0;
-        float input_float = 0.0f;
-        int input_int = 0;
-        bool checkbox_toggle = false;
+        std::string m_input_str = {};
+        double m_input_double = 0.0;
+        float m_input_float = 0.0f;
+        int m_input_int = 0;
+        bool m_checkbox_toggle = false;
 
-        std::vector<std::string> fruits = { "apple", "orange", "strawberry", "banana", "lemon" };
-        std::string selected_fruit = fruits[0];
+        std::vector<std::string> m_fruits = { "apple", "orange", "strawberry", "banana", "lemon" };
+        std::string m_selected_fruit = m_fruits[0];
 
-        float slider_step_f = 10.0f;
-        float slider_min_f = 1.0f;
-        float slider_max_f = 100.0f;
+        float m_slider_step_f = 10.0f;
+        float m_slider_min_f = 1.0f;
+        float m_slider_max_f = 100.0f;
 
-        int slider_step_i= 1;
-        int slider_min_i = 1;
-        int slider_max_i = 100;
+        int m_slider_step_i= 1;
+        int m_slider_min_i = 1;
+        int m_slider_max_i = 100;
 
-        float color[4] = {1.f, 1.f, 1.f, 1.f};
+        float m_color[4] = {1.f, 1.f, 1.f, 1.f};
 
-        std::vector<std::string> meats = { "beef", "pork", "chicken", "fish" };
-        std::string selected_meat = meats[0];
+        std::vector<std::string> m_meats = { "beef", "pork", "chicken", "fish" };
+        std::string m_selected_meat = m_meats[0];
 
-        bool radio_toggle = true;
+        bool m_radio_toggle = true;
 };

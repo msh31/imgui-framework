@@ -1,10 +1,10 @@
 #pragma once
 #include <backend/paths.hpp>
 
-class Config {
+class CConfig {
 public:
-    Config(fs::path config_dir = paths::config_dir());
-    ~Config();
+    CConfig(fs::path config_dir = paths::config_dir());
+    ~CConfig();
     void save();
 
     struct AppConfig {
@@ -13,7 +13,7 @@ public:
 
     AppConfig settings;
 private:
-    fs::path config_file = paths::config_dir() / "config.json";
+    fs::path m_config_file = paths::config_dir() / "config.json";
 
     void load();
 };

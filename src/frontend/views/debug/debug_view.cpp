@@ -2,12 +2,8 @@
 #include <frontend/notification/notification.hpp>
 #include <frontend/dialogs/confirm/confirm_dialog.hpp>
 
-void DebugView::on_enter() {
-
-}
-
-void DebugView::render() {
-    task_runner.update(); //needs a refactor but fine for now
+void CDebugView::render() {
+    m_task_runner.update(); //needs a refactor but fine for now
 
     if(ImGui::Button("Click Me")) {
         Notify::show_notification("", "Click Me button has been clicked!", 2000);
@@ -28,17 +24,13 @@ void DebugView::render() {
     }
 
     if(ImGui::Button("Test async task")) {
-        task_runner.run(
+        m_task_runner.run(
                 []{ std::this_thread::sleep_for(std::chrono::seconds(2)); },
                 []{ Notify::show_notification("Async", "Task complete!", 2000); }
                 );
     }
 }
 
-void DebugView::on_exit() {
-
-}
-
-DebugView::~DebugView() {
-    SPDLOG_INFO("goodbye: debugview");
-}
+void CDebugView::on_enter() {};
+void CDebugView::on_exit() {}
+CDebugView::~CDebugView() {}
