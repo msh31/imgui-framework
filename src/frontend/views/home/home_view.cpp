@@ -70,7 +70,7 @@ void HomeView::render() {
 }
 
 void HomeView::on_exit() {
-
+    Notify::show_notification("Departure", std::format("Goodbye: {}", get_username().c_str()), 1500);
 }
 
 HomeView::~HomeView() {
