@@ -11,6 +11,7 @@ int main() {
         CApp app;
 
         app.init();
+        SPDLOG_INFO("Initialized succesfully!");
         window.run([&app]{ app.render(); });
     } catch(const std::exception& e) {
         SPDLOG_CRITICAL("Fatal: {}", e.what());

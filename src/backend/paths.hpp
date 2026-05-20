@@ -1,4 +1,5 @@
 #pragma once
+#include "constants.hpp" //not ideal...
 
 namespace paths {
 inline fs::path g_config_dir;
@@ -34,9 +35,11 @@ inline fs::path config_dir() {
 }
 
 inline fs::path redirect_file() {
-    return default_config_dir() / "cfg.redirect";
+    return config_dir() / "cfg.redirect";
 }
-
+inline fs::path log_dir() {
+    return config_dir() / "logs";
+}
 inline fs::path cache_dir() {
     return config_dir() / "cache";
 }
@@ -56,5 +59,5 @@ inline fs::path documents_dir() {
 }
 #endif
 
-inline fs::path log_file() { return config_dir() / "template_app.log"; }
+inline fs::path log_file() { return log_dir() / std::format("{}.log", APP_NAME); }
 };

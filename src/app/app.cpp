@@ -50,7 +50,7 @@ void CApp::render() {
 }
 
 void CApp::setup_logger(std::string_view pattern) {
-    auto file_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>((paths::config_dir() / "app.log").string(), 0, 0);
+    auto file_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>((paths::log_file()).string(), 0, 0);
     auto app_logger = std::make_shared<spdlog::logger>(APP_NAME, spdlog::sinks_init_list{file_sink});
     spdlog::set_default_logger(app_logger);
     spdlog::set_pattern(std::string(pattern));
