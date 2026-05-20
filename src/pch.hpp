@@ -12,6 +12,7 @@
 #include <future>
 #include <stdexcept>
 #include <memory>
+#include <unordered_set>
 
 #include "imgui.h"
 #include "imgui_stdlib.h"
