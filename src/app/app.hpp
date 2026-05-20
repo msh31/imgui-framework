@@ -17,7 +17,7 @@ public:
     };
 
 private:
-    void setup_logger();
+    void setup_logger(std::string_view pattern = "[%l] %d-%m-%Y %H:%M:%S - %v (in: %@)");
 
     CConfig m_config;
     AppContext m_ctx{&m_config};
