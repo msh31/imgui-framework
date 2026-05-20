@@ -13,6 +13,7 @@
 #include <stdexcept>
 #include <memory>
 #include <unordered_set>
+#include <fstream>
 
 #include "imgui.h"
 #include "imgui_stdlib.h"

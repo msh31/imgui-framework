@@ -5,7 +5,6 @@
 
 #include "config.hpp"
 #include <nlohmann/json.hpp>
-#include <fstream>
 
 using json = nlohmann::json;
 
@@ -15,6 +14,7 @@ Config::Config(fs::path config_dir) : config_file(config_dir / "config.json") {
             if(!fs::create_directories(config_dir)) {
                 throw std::runtime_error("Failed to create config directory");
             }
+            save();
         }
         load();
 
@@ -36,11 +36,6 @@ Config::~Config() {
     }
 }
 
-bool Config::init() {
-    //placeholder
-    return true;
-}
-
 void Config::save() {
     json data;
     data["dark_mode"] = settings.dark_mode;
@@ -51,10 +46,6 @@ void Config::save() {
 
 void Config::load() {
     json data;
-
-    if(!fs::exists(config_file)) {
-        save();
-    }
 
     std::ifstream file(config_file.c_str());
     if(!file.is_open()) {

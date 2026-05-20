@@ -5,7 +5,6 @@ class Config {
 public:
     Config(fs::path config_dir = paths::config_dir());
     ~Config();
-    bool init();
     void save();
 
     struct AppConfig {

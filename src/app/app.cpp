@@ -15,11 +15,6 @@
 #include <frontend/dialogs/confirm/confirm_dialog.hpp>
 
 void CApp::init() {
-    if(!m_config.init()) { 
-        throw std::runtime_error("Config is missing and could not be generated!");
-    }
-    m_config.save();
-
     setup_logger();
     ThemeManager::apply_style();
 
