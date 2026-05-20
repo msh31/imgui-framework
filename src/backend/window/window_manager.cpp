@@ -41,7 +41,6 @@ void CWindowManager::run(std::function<void()> fun) {
 
 void CWindowManager::setup_opengl() {
     if(!glfwInit()) {
-        SPDLOG_CRITICAL("Failed to initialize GLFW.");
         throw std::runtime_error("Failed to initialize GLFW");
     }
 
@@ -52,7 +51,6 @@ void CWindowManager::setup_opengl() {
 
     m_window = glfwCreateWindow(DEF_RES_W, DEF_RES_H, APP_NAME, nullptr, nullptr);
     if(m_window == nullptr) {
-        SPDLOG_CRITICAL("Failed to create GLFW window. OpenGL 3.3 support is required!");
         glfwTerminate();
         throw std::runtime_error("Failed to create GLFW window, OpenGL 3.3 support is required");
     }
@@ -61,7 +59,6 @@ void CWindowManager::setup_opengl() {
     glfwMakeContextCurrent(m_window);
     glfwSwapInterval(1);
     if (!gladLoadGL(glfwGetProcAddress)) {
-        SPDLOG_CRITICAL("Failed to initialize GLAD");
         throw std::runtime_error("Failed to initialize GLAD");
     }
 }
@@ -74,22 +71,13 @@ void CWindowManager::setup_imgui() {
     io.IniFilename = nullptr; //no imgui.ini
     io.LogFilename = nullptr; //no imgui log pls
 
-    ImFontConfig font_cfg;
-    font_cfg.FontDataOwnedByAtlas = false;
-
-    ImFont* jbm = io.Fonts->AddFontFromMemoryTTF((void*)jbm_reg, jbm_reg_len, 16.0f, &font_cfg);
-    font_cfg.MergeMode = true;
-    font_cfg.GlyphMinAdvanceX = 16.0f;
-    static const ImWchar icon_ranges[] = {0xf000, 0xf2e0, 0};
-    io.Fonts->AddFontFromMemoryTTF((void*)font_awesome, font_awesome_len, 16.0f, &font_cfg, icon_ranges);
-    io.FontDefault = jbm;
+    m_font_mgr.load_from_memory({"jbm_reg", 16.0f, false, true}, (void*)jbm_reg, jbm_reg_len);
+    m_font_mgr.load_from_memory({"font_awesome", 16.0f, true, false}, (void*)font_awesome, font_awesome_len);
 
     if(!ImGui_ImplGlfw_InitForOpenGL(m_window, true)) {
-        SPDLOG_CRITICAL("Failed to initialize ImGui for OpenGL");
         throw std::runtime_error("Failed to initialize ImGui for OpenGL");
     }
     if(!ImGui_ImplOpenGL3_Init()) {
-        SPDLOG_CRITICAL("Failed to initialize ImGui");
         throw std::runtime_error("Failed to initialize ImGui");
     }
 }

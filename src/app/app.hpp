@@ -6,7 +6,6 @@
 #include <backend/taskrunner/task_runner.hpp>
 
 #include <frontend/components/sidebar/sidebar.hpp>
-#include <frontend/fonts/font_manager.hpp>
 
 class CApp {
 public:
@@ -25,7 +24,6 @@ private:
     CViewManager m_view_manager;
 
     TaskRunner m_task_runner;
-    CFontManager m_font_mgr;
 
     CSideBar m_sidebar;
 };

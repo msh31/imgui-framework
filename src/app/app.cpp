@@ -11,7 +11,7 @@
 #include <frontend/views/debug/debug_view.hpp>
 
 #include <frontend/notification/notification.hpp>
-#include <frontend/components/confirmdialog/confirm_dialog.hpp>
+#include <frontend/dialogs/confirm/confirm_dialog.hpp>
 
 void CApp::init() {
     if(!m_config.init()) {
@@ -21,7 +21,6 @@ void CApp::init() {
 
     setup_logger();
     ThemeManager::apply_style();
-    m_font_mgr.load_from_memory("jbm_reg", 16.0f, (void*)jbm_reg);
 
     auto* home = m_view_manager.add_view({std::make_unique<HomeView>(), "", "Home"});
     auto* debug = m_view_manager.add_view({std::make_unique<DebugView>(), "", "Debug"});
