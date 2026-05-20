@@ -1,0 +1,6 @@
+BasedOnStyle: LLVM
+SpacesInParentheses: true
+SpaceInEmptyParentheses: true
+AllowShortIfStatementsOnASingleLine: Always
+IndentWidth: 4
+ColumnLimit: 120
