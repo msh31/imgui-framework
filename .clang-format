@@ -6,3 +6,5 @@ IndentWidth: 4
 ColumnLimit: 120
 AccessModifierOffset: 0
 IndentAccessModifiers: true
+AlignAfterOpenBracket: AlwaysBreak
+ContinuationIndentWidth: 4 # default
