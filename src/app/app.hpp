@@ -8,21 +8,20 @@
 // #include <frontend/layout/ribbon/ribbon.hpp>
 
 class CApp {
-public:
-    void init();
-    void render();
+    public:
+        void init( );
+        void render( );
 
-private:
-    void setup_logger(std::string_view pattern = "[%l] %d-%m-%Y %H:%M:%S - %v (in: %@)");
+    private:
+        void setup_logger( std::string_view pattern = "[%l] %d-%m-%Y %H:%M:%S - %v (in: %@)" );
 
-    CConfig m_config;
-    // CUIManager m_ui_manager { std::make_unique<CTabbarShell>() };
-    CUIManager m_ui_manager { std::make_unique<CSidebarShell>() };
-    // CUIManager m_ui_manager { std::make_unique<CRibbonShell>() };
+        CConfig m_config;
+        // CUIManager m_ui_manager { std::make_unique<CTabbarShell>() };
+        CUIManager m_ui_manager{ std::make_unique<CSidebarShell>( ) };
+        // CUIManager m_ui_manager { std::make_unique<CRibbonShell>() };
 
-    bool m_toggle_a = false, m_toggle_b = false, m_toggle_c = true,
-         m_toggle_d = false, m_toggle_e = false;
+        bool m_toggle_a = false, m_toggle_b = false, m_toggle_c = true, m_toggle_d = false, m_toggle_e = false;
 
-    CMenuBar m_menubar;
-    CStatusBar m_statusbar;
+        CMenuBar m_menubar;
+        CStatusBar m_statusbar;
 };
