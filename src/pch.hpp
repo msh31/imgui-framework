@@ -29,9 +29,11 @@ namespace fs = std::filesystem;
     #include <types.hpp> //holds custom types defined by the application
 #endif
 
-#include <GLFW/glfw3.h>
-#include <KHR/khrplatform.h>
+// clang-format off
 #include <glad/gl.h>
+#include <KHR/khrplatform.h>
+#include <GLFW/glfw3.h>
+// clang-format on
 
 #ifdef __linux__
     #include <sys/types.h>
