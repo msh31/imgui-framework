@@ -9,7 +9,7 @@
 
 #include <frontend/views/debug/debug_view.hpp>
 #include <frontend/views/home/home_view.hpp>
-#include <frontend/views/pipeline/pipeline_demo.hpp> //demo!
+#include <frontend/views/pipeline/pipeline_demo.hpp>
 #include <frontend/views/settings/settings_view.hpp>
 
 #include <frontend/dialogs/confirm/confirm_dialog.hpp>
@@ -19,32 +19,34 @@ void CApp::init( ) {
     setup_logger( );
     ThemeManager::apply_style( );
 
-    auto *home = m_view_manager.add_view( { std::make_unique<CHomeView>( ), "", "Home" } );
-    auto *demo = m_view_manager.add_view( { std::make_unique<CPipelineView>( ), "", "Pipeline Demo" } );
-    auto *debug = m_view_manager.add_view( { std::make_unique<CDebugView>( ), "", "Debug" } );
-    auto *settings = m_view_manager.add_view( { std::make_unique<CSettingsView>( m_config ), "", "Settings" } );
+    m_ui_manager.add_view( { std::make_unique<CHomeView>( ), "\xef\x80\x95", "Home" } );
+    m_ui_manager.add_view( { std::make_unique<CPipelineView>( ), "\xef\x83\xa8", "Pipeline Demo" } );
+    m_ui_manager.add_view( { std::make_unique<CDebugView>( ), "\xef\x86\x88", "Debug" } );
+    m_ui_manager.set_settings_view( { std::make_unique<CSettingsView>( m_config ), "\xef\x80\x93", "Settings" } );
 
-    m_sidebar.add_item( { "\xef\x80\x95", "Home", home } );
-    m_sidebar.add_item( { "\xef\x83\xa8", "Pipeline Demo", demo } );
-    m_sidebar.add_item( { "\xef\x86\x88", "Debug", debug } );
-    m_sidebar.set_settings_view( settings );
+    m_menubar.add_group( { "File", {
+        { "\xef\x80\x81", "New",  [] { Notify::show_notification( "File", "New",    1500 ); } },
+        { "\xef\x81\xbb", "Open", [] { Notify::show_notification( "File", "Open",   1500 ); } },
+        { "\xef\x83\x87", "Save", [] { Notify::show_notification( "File", "Saved!", 1500 ); } },
+    } } );
+    m_menubar.add_group( { "Options", {
+        { "\xef\x80\x93", "Dark Mode", nullptr, &m_config.settings.dark_mode },
+        { "\xef\x83\xa8", "Feature A", nullptr, &m_toggle_a },
+        { "\xef\x86\x88", "Feature B", nullptr, &m_toggle_b },
+        { "\xef\x80\x95", "Feature C", nullptr, &m_toggle_c },
+        { "\xef\x80\x81", "Feature D", nullptr, &m_toggle_d },
+        { "\xef\x81\xbb", "Feature E", nullptr, &m_toggle_e },
+    } } );
+    m_ui_manager.set_menubar( std::move( m_menubar ) );
+
+    m_statusbar.add_left({"I am a statusbar", "X"});
+    m_statusbar.add_right({"Build", "1.69"});
+    m_ui_manager.set_statusbar(std::move(m_statusbar));
 }
 
 void CApp::render( ) {
     ThemeManager::apply_colors( m_config.settings.dark_mode ? ThemeType::Dark : ThemeType::Light );
-
-    auto active_view = m_view_manager.get_active_view( );
-    if ( active_view == nullptr ) {
-        throw std::runtime_error( "Failed to get active view!" );
-    }
-
-    auto sidebar_result = m_sidebar.render( active_view );
-    if ( sidebar_result != nullptr ) m_view_manager.set_active_view( sidebar_result );
-    ImGui::SameLine( );
-    ImGui::BeginChild( "##maincontent", ImVec2( 0, 0 ), ImGuiChildFlags_Borders );
-    active_view->render( );
-    ImGui::EndChild( );
-
+    m_ui_manager.render( );
     Notify::render_notifications( );
     ConfirmDialog::render( );
 }

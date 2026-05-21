@@ -1,29 +1,28 @@
 #pragma once
 #include <backend/config/config.hpp>
 #include <backend/paths.hpp>
+#include <backend/ui_manager/ui_manager.hpp>
 
-#include <backend/view_manager/view_manager.hpp>
-#include <backend/taskrunner/task_runner.hpp>
-
-#include <frontend/components/sidebar/sidebar.hpp>
+// #include <frontend/layout/tabbar/tabbar.hpp>
+// #include <frontend/layout/sidebar/sidebar.hpp>
+#include <frontend/layout/ribbon/ribbon.hpp>
 
 class CApp {
 public:
     void init();
     void render();
 
-    struct AppContext {
-        CConfig* config;
-    };
-
 private:
     void setup_logger(std::string_view pattern = "[%l] %d-%m-%Y %H:%M:%S - %v (in: %@)");
 
     CConfig m_config;
-    AppContext m_ctx{&m_config};
-    CViewManager m_view_manager;
+    // CUIManager m_ui_manager { std::make_unique<CTabbarShell>() };
+    // CUIManager m_ui_manager { std::make_unique<CSidebarShell>() };
+    CUIManager m_ui_manager { std::make_unique<CRibbonShell>() };
 
-    CTaskRunner m_task_runner;
+    bool m_toggle_a = false, m_toggle_b = false, m_toggle_c = true,
+         m_toggle_d = false, m_toggle_e = false;
 
-    CSideBar m_sidebar;
+    CMenuBar m_menubar;
+    CStatusBar m_statusbar;
 };

@@ -5,3 +5,4 @@ enum PipelineError {
     PROCESSING_FAILURE, //show msg
     INVALID_STATE //unrecoverable
 };
+
