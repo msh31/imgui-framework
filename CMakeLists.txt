@@ -46,6 +46,8 @@ find_package(nlohmann_json REQUIRED)
 
 find_package(spdlog REQUIRED)
 
+find_package(GTest REQUIRED)
+
 # Target: template_app
 set(template_app_SOURCES
 	cmake.toml
@@ -113,3 +115,39 @@ target_sources(template_app PRIVATE
     "${IMGUI_ROOT_DIR}/res/bindings/imgui_impl_glfw.cpp"
     "${IMGUI_ROOT_DIR}/res/bindings/imgui_impl_opengl3.cpp"
 )
+
+# Target: template_tests
+set(template_tests_SOURCES
+	cmake.toml
+	"tests/main.cpp"
+)
+
+add_executable(template_tests)
+
+target_sources(template_tests PRIVATE ${template_tests_SOURCES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${template_tests_SOURCES})
+
+target_compile_features(template_tests PRIVATE
+	cxx_std_23
+)
+
+target_include_directories(template_tests PRIVATE
+	src
+)
+
+target_link_libraries(template_tests PRIVATE
+	GTest::gtest_main
+)
+
+target_precompile_headers(template_tests PRIVATE
+	"src/pch.hpp"
+)
+
+get_directory_property(CMKR_VS_STARTUP_PROJECT DIRECTORY ${PROJECT_SOURCE_DIR} DEFINITION VS_STARTUP_PROJECT)
+if(NOT CMKR_VS_STARTUP_PROJECT)
+	set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT template_tests)
+endif()
+
+set(CMKR_TARGET template_tests)
+enable_testing()
+add_test(NAME template_tests COMMAND template_tests)
