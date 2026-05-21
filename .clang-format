@@ -5,3 +5,4 @@ AllowShortIfStatementsOnASingleLine: Always
 IndentWidth: 4
 ColumnLimit: 120
 AccessModifierOffset: 0
+IndentAccessModifiers: true
