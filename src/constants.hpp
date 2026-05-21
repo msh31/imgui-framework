@@ -1,8 +1,8 @@
 #pragma once
 
-#define APP_NAME "Desktop Template App" 
-#define APP_AUTHOR "marco007" 
-#define APP_VERSION "1.0.0" 
+#define APP_NAME "Desktop Template App"
+#define APP_AUTHOR "marco007"
+#define APP_VERSION "1.0.0"
 
 constexpr int MIN_RES_W = 1280;
 constexpr int MIN_RES_H = 720;

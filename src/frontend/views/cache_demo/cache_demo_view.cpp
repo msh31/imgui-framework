@@ -37,14 +37,14 @@ void CCacheDemoView::render( ) {
     if ( m_cache.is_refreshing( ) ) {
         Spinner::render( );
     } else {
-        for ( const auto &entry : m_cache.get( ) ) {
+        for ( const auto& entry : m_cache.get( ) ) {
             ImGui::TextColored( ImColor( 49, 206, 234 ).Value, "Item Name: %s", entry.name.c_str( ) );
             ImGui::SameLine( );
             ImGui::TextColored( ImColor( 50, 185, 18 ).Value, "Price: %f", entry.floaty );
             ImGui::SameLine( );
             ImGui::Text( " History: " );
             ImGui::SameLine( );
-            for ( const auto &n : entry.numbers ) {
+            for ( const auto& n : entry.numbers ) {
                 ImGui::TextColored( ImColor( 100, 100, 100 ).Value, "$%d,", n );
                 ImGui::SameLine( );
             }

@@ -22,6 +22,6 @@ class CApp {
 
         bool m_toggle_a = false, m_toggle_b = false, m_toggle_c = true, m_toggle_d = false, m_toggle_e = false;
 
-        CMenuBar m_menubar;
+        CMenuBar   m_menubar;
         CStatusBar m_statusbar;
 };

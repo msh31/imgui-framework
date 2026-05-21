@@ -33,7 +33,7 @@ void CHomeView::render( ) {
 
         ImGui::SetNextItemWidth( 200.0f );
         if ( ImGui::BeginCombo( "Combo", m_selected_fruit.c_str( ) ) ) {
-            for ( const auto &fruit : m_fruits ) {
+            for ( const auto& fruit : m_fruits ) {
                 if ( ImGui::Selectable( fruit.c_str( ), fruit == m_selected_fruit ) ) {
                     m_selected_fruit = fruit;
                 }
@@ -43,7 +43,7 @@ void CHomeView::render( ) {
 
         ImGui::SetNextItemWidth( 200.0f );
         if ( ImGui::BeginListBox( "Listbox" ) ) {
-            for ( const auto &meat : m_meats ) {
+            for ( const auto& meat : m_meats ) {
                 if ( ImGui::Selectable( meat.c_str( ), meat == m_selected_meat ) ) {
                     m_selected_meat = meat;
                 }

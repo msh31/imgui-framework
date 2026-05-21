@@ -6,26 +6,26 @@
 
 class CWindowManager {
     public:
-        CWindowManager() {
-            setup_opengl();
-            setup_imgui();
+        CWindowManager( ) {
+            setup_opengl( );
+            setup_imgui( );
         }
-        ~CWindowManager() {
-            if(m_window != nullptr) {
-                ImGui_ImplOpenGL3_Shutdown();
-                ImGui_ImplGlfw_Shutdown();
-                ImGui::DestroyContext();
-                glfwDestroyWindow(m_window);
-                glfwTerminate();
+        ~CWindowManager( ) {
+            if ( m_window != nullptr ) {
+                ImGui_ImplOpenGL3_Shutdown( );
+                ImGui_ImplGlfw_Shutdown( );
+                ImGui::DestroyContext( );
+                glfwDestroyWindow( m_window );
+                glfwTerminate( );
             }
         }
 
-        void run(std::function<void()> fun);
+        void run( std::function<void( )> fun );
 
     private:
-        GLFWwindow* m_window = nullptr;
+        GLFWwindow*  m_window = nullptr;
         CFontManager m_font_mgr;
 
-        void setup_opengl();
-        void setup_imgui();
+        void setup_opengl( );
+        void setup_imgui( );
 };

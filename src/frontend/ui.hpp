@@ -11,7 +11,7 @@ namespace ui {
         //  ImGui::TextColored(ImColor(198, 97, 63).Value, "%s", std::string(text).c_str());
     }
 
-    inline void add_font_text( std::string_view text, ImFont *font, float size = 0.0f ) {
+    inline void add_font_text( std::string_view text, ImFont* font, float size = 0.0f ) {
         ImGui::PushFont( font, size );
         ImGui::Text( "%s", text.data( ) );
         ImGui::PopFont( );

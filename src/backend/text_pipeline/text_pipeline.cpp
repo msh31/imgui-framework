@@ -38,7 +38,7 @@ std::expected<std::string, PipelineError> CTextPipeline::run( std::string_view i
     if ( m_stages.empty( ) ) return std::unexpected( EMPTY_INPUT );
 
     std::string current = std::string( input );
-    for ( auto &stage : m_stages ) {
+    for ( auto& stage : m_stages ) {
         auto result = stage( current );
         if ( !result ) return std::unexpected( result.error( ) );
         current = *result;

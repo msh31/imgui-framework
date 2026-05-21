@@ -3,7 +3,7 @@
 void CStatusBar::add_left( Item item ) { m_left.push_back( item ); }
 void CStatusBar::add_right( Item item ) { m_right.push_back( item ); }
 
-void CStatusBar::render_item( const Item &item ) {
+void CStatusBar::render_item( const Item& item ) {
     if ( item.dot_color ) {
         ImGui::TextColored( *item.dot_color, "\xe2\x97\x8f" );
         ImGui::SameLine( 0, 4.f );
@@ -12,11 +12,12 @@ void CStatusBar::render_item( const Item &item ) {
 }
 
 void CStatusBar::render( ) {
-    auto &style = ImGui::GetStyle( );
+    auto& style = ImGui::GetStyle( );
 
     ImGui::PushStyleVar( ImGuiStyleVar_WindowPadding, { 8.f, ( height( ) - ImGui::GetTextLineHeight( ) ) * 0.5f } );
-    ImGui::BeginChild( "##statusbar", { 0.f, height( ) }, ImGuiChildFlags_Borders,
-                       ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse );
+    ImGui::BeginChild(
+        "##statusbar", { 0.f, height( ) }, ImGuiChildFlags_Borders,
+        ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse );
     ImGui::PushStyleVar( ImGuiStyleVar_ItemSpacing, { 12.f, 0.f } );
 
     float content_y = ImGui::GetCursorPosY( );
@@ -27,7 +28,7 @@ void CStatusBar::render( ) {
     }
 
     float right_w = 0.f;
-    for ( auto &item : m_right ) {
+    for ( auto& item : m_right ) {
         if ( item.dot_color ) right_w += ImGui::CalcTextSize( "\xe2\x97\x8f " ).x + 4.f;
         right_w += ImGui::CalcTextSize( std::format( "{}: {}", item.label, item.value ).c_str( ) ).x;
         right_w += 12.f;

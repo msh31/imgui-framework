@@ -1,14 +1,14 @@
 #include "settings_view.hpp"
 
 #ifdef __APPLE__
-#include <spawn.h>
-#include <sys/wait.h>
+    #include <spawn.h>
+    #include <sys/wait.h>
 #endif
 #ifdef _WIN32
-#include <shellapi.h>
+    #include <shellapi.h>
 #endif
 
-CSettingsView::CSettingsView( CConfig &cfg ) : m_config( cfg ) {};
+CSettingsView::CSettingsView( CConfig& cfg ) : m_config( cfg ) {};
 
 void CSettingsView::on_enter( ) {}
 
@@ -27,12 +27,12 @@ void CSettingsView::render( ) {
         ShellExecuteA( NULL, "open", paths::config_dir( ).string( ).c_str( ), NULL, NULL, SW_SHOWDEFAULT );
 #endif
 #ifdef __APPLE__
-        extern char **environ;
-        pid_t pid;
-        std::string path = paths::config_dir( ).string( );
+        extern char** environ;
+        pid_t         pid;
+        std::string   path = paths::config_dir( ).string( );
 
-        const char *argv[] = { "open", path.c_str( ), nullptr };
-        int status = posix_spawn( &pid, "/usr/bin/open", nullptr, nullptr, (char *const *)argv, environ );
+        const char* argv[] = { "open", path.c_str( ), nullptr };
+        int         status = posix_spawn( &pid, "/usr/bin/open", nullptr, nullptr, (char* const*)argv, environ );
         if ( status == 0 ) {
             waitpid( pid, &status, 0 );
         }

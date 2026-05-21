@@ -1,17 +1,17 @@
 #include "sidebar.hpp"
 #include <constants.hpp>
 
-CBaseView *CSideBar::render( CBaseView *active ) {
+CBaseView* CSideBar::render( CBaseView* active ) {
     ImGui::BeginChild( "##sidebar", { 180.f, 0 }, ImGuiChildFlags_Borders );
     float content_w = ImGui::GetContentRegionAvail( ).x;
-    float btn_h = ImGui::GetFrameHeight( );
+    float btn_h     = ImGui::GetFrameHeight( );
 
     ImGui::TextDisabled( APP_NAME );
     ImGui::Separator( );
     ImGui::Spacing( );
 
-    CBaseView *r_item = nullptr;
-    for ( const auto &item : m_items ) {
+    CBaseView* r_item = nullptr;
+    for ( const auto& item : m_items ) {
         if ( nav_button( item.icon, item.label, item.view == active, content_w ) ) {
             r_item = item.view;
             break;
@@ -30,10 +30,10 @@ CBaseView *CSideBar::render( CBaseView *active ) {
 
 void CSideBar::add_item( CBaseView::ViewItem item ) { m_items.push_back( item ); }
 
-void CSideBar::set_settings_view( CBaseView *view ) { m_settings = view; }
+void CSideBar::set_settings_view( CBaseView* view ) { m_settings = view; }
 
-bool CSideBar::nav_button( const char *icon, const char *label, bool active, float width ) {
-    ImGuiStyle &style = ImGui::GetStyle( );
+bool CSideBar::nav_button( const char* icon, const char* label, bool active, float width ) {
+    ImGuiStyle& style = ImGui::GetStyle( );
 
     if ( active ) {
         ImGui::PushStyleColor( ImGuiCol_Button, style.Colors[ImGuiCol_ButtonActive] );
@@ -42,8 +42,8 @@ bool CSideBar::nav_button( const char *icon, const char *label, bool active, flo
     }
     ImGui::PushStyleVar( ImGuiStyleVar_ButtonTextAlign, ImVec2( 0.0f, 0.5f ) );
 
-    std::string text = std::format( "  {}   {}##nav_{}", icon, label, label );
-    bool clicked = ImGui::Button( text.c_str( ), ImVec2( width, 0 ) );
+    std::string text    = std::format( "  {}   {}##nav_{}", icon, label, label );
+    bool        clicked = ImGui::Button( text.c_str( ), ImVec2( width, 0 ) );
 
     ImGui::PopStyleVar( );
     if ( active ) ImGui::PopStyleColor( 3 );
