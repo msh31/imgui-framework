@@ -13,8 +13,6 @@ class CApp {
         void render( );
 
     private:
-        void setup_logger( std::string_view pattern = "[%l] %d-%m-%Y %H:%M:%S - %v (in: %@)" );
-
         CConfig m_config;
         // CUIManager m_ui_manager { std::make_unique<CTabbarShell>() };
         CUIManager m_ui_manager{ std::make_unique<CSidebarShell>( ) };
