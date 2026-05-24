@@ -32,11 +32,11 @@ void CCacheDemoView::on_enter( ) {
 };
 
 void CCacheDemoView::render( ) {
+    auto cache = m_cache.get( );
+
     if ( m_cache.is_refreshing( ) ) {
         Spinner::render( );
     } else {
-        auto cache = m_cache.get( );
-
         for ( const auto& entry : cache ) {
             ImGui::TextColored( ImColor( 49, 206, 234 ).Value, "Item Name: %s", entry.name.c_str( ) );
             ImGui::SameLine( );
