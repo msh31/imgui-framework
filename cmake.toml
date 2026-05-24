@@ -4,8 +4,8 @@ version = "3.31"
 cmkr-include = "cmkr.cmake"
 
 [project]
-name = "desktop-app-template"
-description = "A simple template for cross-platform apps in C++"
+name = "ImGui Framework"
+description = "A lightweight C++ framework for building cross-platform desktop apps with ImGui and OpenGL"
 languages = ["C", "CXX"]
 
 [find-package.glad]

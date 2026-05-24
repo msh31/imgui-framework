@@ -1,6 +1,6 @@
 #pragma once
 
-#define APP_NAME "Desktop Template App"
+#define APP_NAME "ImGui Framework"
 #define APP_AUTHOR "marco007"
 #define APP_VERSION "1.0.0"
 

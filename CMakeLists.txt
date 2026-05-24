@@ -27,12 +27,12 @@ endif()
 # Variables
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(desktop-app-template
+project("ImGui Framework"
 	LANGUAGES
 		C
 		CXX
 	DESCRIPTION
-		"A simple template for cross-platform apps in C++"
+		"A lightweight C++ framework for building cross-platform desktop apps with ImGui and OpenGL"
 )
 
 # Packages
