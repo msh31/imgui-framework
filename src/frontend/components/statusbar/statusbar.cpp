@@ -43,6 +43,8 @@ void CStatusBar::render( ) {
         render_item( m_right[i] );
     }
 
+    ImGui::Dummy( ImVec2( 0.f, 0.f ) );
+
     ImGui::PopStyleVar( );
     ImGui::EndChild( );
     ImGui::PopStyleVar( );
