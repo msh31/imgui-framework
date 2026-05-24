@@ -1,4 +1,7 @@
 #pragma once
+#include <filesystem>
+namespace fs = std::filesystem;
+
 #include "constants.hpp" //not ideal...
 
 namespace paths {
