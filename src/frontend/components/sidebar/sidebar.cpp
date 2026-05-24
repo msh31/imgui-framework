@@ -6,7 +6,7 @@ CBaseView* CSideBar::render( CBaseView* active ) {
     float content_w = ImGui::GetContentRegionAvail( ).x;
     float btn_h     = ImGui::GetFrameHeight( );
 
-    ImGui::TextDisabled( APP_NAME );
+    ImGui::TextDisabled( "%s", APP_NAME.c_str( ) );
     ImGui::Separator( );
     ImGui::Spacing( );
 
