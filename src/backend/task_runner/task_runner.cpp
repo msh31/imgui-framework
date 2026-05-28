@@ -1,7 +1,7 @@
 #include "task_runner.hpp"
 
 void CTaskRunner::run( std::function<void( )> work, std::function<void( )> on_complete ) {
-    m_tasks.emplace_back( Task{ std::async( std::launch::async, work ), on_complete } );
+    m_tasks.emplace_back( Task{ std::async( std::launch::async, work ), std::move( on_complete ) } );
 }
 
 void CTaskRunner::update( ) {
