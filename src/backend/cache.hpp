@@ -3,6 +3,8 @@
 
 template <typename T> class CCache {
     public:
+        ~CCache( ) { m_taskrunner.shutdown( ); }
+
         void refresh( std::function<T( )> fun ) {
             if ( m_is_refreshing ) return;
 
