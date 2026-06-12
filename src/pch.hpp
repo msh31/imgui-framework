@@ -25,6 +25,8 @@
     #include <spdlog/spdlog.h>
 
     #include <types.hpp> //holds custom types defined by the application
+
+namespace fs = std::filesystem;
 #endif
 
 // clang-format off

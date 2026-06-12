@@ -1,7 +1,4 @@
 #pragma once
-#include <filesystem>
-namespace fs = std::filesystem;
-
 #include "constants.hpp" //not ideal...
 
 namespace paths {
@@ -21,11 +18,11 @@ namespace paths {
 
     inline fs::path default_config_dir( ) {
 #if defined( __linux__ )
-        return home_dir( ) / ".config" / "template_app";
+        return home_dir( ) / ".config" / APP_NAME;
 #elif defined( __APPLE__ )
-        return home_dir( ) / "Library" / "Application Support" / "template_app";
+        return home_dir( ) / "Library" / "Application Support" / APP_NAME;
 #elif defined( _WIN32 )
-        return home_dir( ) / "template_app";
+        return home_dir( ) / APP_NAME;
 #endif
     }
 
