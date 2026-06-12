@@ -16,4 +16,4 @@ void CSettingsView::render( ) {
 
 void CSettingsView::on_exit( ) {}
 
-CSettingsView::~CSettingsView( ) { SPDLOG_INFO( "goodbye: settingsview" ); }
+CSettingsView::~CSettingsView( ) {}
