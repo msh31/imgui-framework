@@ -21,9 +21,6 @@
     #include "imgui_stdlib.h"
 
     #include <backend/logger.hpp>
-    #include <spdlog/sinks/daily_file_sink.h>
-    #include <spdlog/spdlog.h>
-
     #include <types.hpp> //holds custom types defined by the application
 
 namespace fs = std::filesystem;

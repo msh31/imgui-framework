@@ -1,5 +1,6 @@
 #pragma once
 #include "constants.hpp" //not ideal...
+namespace fs = std::filesystem;
 
 namespace paths {
     inline fs::path g_config_dir;
