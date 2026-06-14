@@ -7,6 +7,8 @@ class CSideBar {
         void       add_item( CBaseView::ViewItem item );
         void       set_settings_view( CBaseView* view ); // a little odd but i cant think of anything better right now
 
+        bool collapsed = true;
+
     private:
         bool nav_button( const char* icon, const char* label, bool active, float width );
 

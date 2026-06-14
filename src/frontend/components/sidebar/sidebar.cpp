@@ -1,29 +1,44 @@
 #include "sidebar.hpp"
+#include <backend/font_manager/font_manager.hpp>
 #include <constants.hpp>
+#include <frontend/icons.hpp>
 
 CBaseView* CSideBar::render( CBaseView* active ) {
-    ImGui::BeginChild( "##sidebar", { 180.f, 0 }, ImGuiChildFlags_Borders );
-    float content_w = ImGui::GetContentRegionAvail( ).x;
-    float btn_h     = ImGui::GetFrameHeight( );
+    float width = collapsed ? 50.0f : 340.f;
 
-    ImGui::TextDisabled( "%s", APP_NAME.c_str( ) );
-    ImGui::Separator( );
-    ImGui::Spacing( );
+    ImGui::BeginChild( "##sidebar", { width, 0 }, ImGuiChildFlags_Borders );
+    float      content_w = ImGui::GetContentRegionAvail( ).x;
+    float      btn_h     = ImGui::GetFrameHeight( );
+    CBaseView* r_item    = nullptr;
 
-    CBaseView* r_item = nullptr;
-    for ( const auto& item : m_items ) {
-        if ( nav_button( item.icon, item.label, item.view == active, content_w ) ) {
-            r_item = item.view;
-            break;
+    if ( !collapsed ) {
+        ImGui::PushFont( CFontManager::get( ).get_font( "jbm_reg_xl" ).value_or( nullptr ) );
+        ImGui::TextDisabled( "%s", APP_NAME.c_str( ) );
+        ImGui::PopFont( );
+        ImGui::SameLine( );
+        ImGui::SetCursorPosX( 29.0f * 10.f );
+        ImGui::PushID( "uncollapsed_button" );
+        if ( ImGui::Button( ICON_MENU ) ) {
+            collapsed = !collapsed;
         }
+        ImGui::PopID( );
+        ImGui::Separator( );
+        ImGui::Spacing( );
     }
 
-    ImGui::SetCursorPosY( ImGui::GetWindowHeight( ) - btn_h - ImGui::GetStyle( ).WindowPadding.y );
-    ImGui::PushStyleVar( ImGuiStyleVar_ButtonTextAlign, ImVec2( 0.0f, 0.5f ) );
-    if ( ImGui::Button( "  \xef\x80\x93   Settings", ImVec2( content_w, 0 ) ) ) {
-        r_item = m_settings;
+    if ( collapsed ) {
+        ImGui::PushID( "collapsed_button" );
+        if ( ImGui::Button( ICON_MENU ) ) {
+            collapsed = !collapsed;
+        }
+        ImGui::PopID( );
     }
-    ImGui::PopStyleVar( );
+
+    for ( const auto& item : m_items ) {
+        r_item = item.view;
+        break;
+    }
+
     ImGui::EndChild( );
     return r_item;
 }
