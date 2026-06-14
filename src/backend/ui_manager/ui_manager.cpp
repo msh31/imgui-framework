@@ -23,6 +23,8 @@ void CUIManager::set_settings_view( ViewConfig cfg ) {
 }
 
 void CUIManager::set_active_view( CBaseView* view ) {
+    if ( view == m_active_view ) return;
+
     if ( m_active_view ) m_active_view->on_exit( );
     m_active_view = view;
     if ( m_active_view ) m_active_view->on_enter( );
