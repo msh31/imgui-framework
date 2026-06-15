@@ -3,6 +3,7 @@
 
 #include <frontend/fonts/font_awesome.hpp>
 #include <frontend/fonts/jbm_reg.h>
+#include <frontend/icons.hpp>
 #include <frontend/theme/theme.hpp>
 
 #include <frontend/views/cache_demo/cache_demo_view.hpp>
@@ -18,28 +19,28 @@ void CApp::init( ) {
     setup_logger( );
     ThemeManager::apply_style( );
 
-    m_ui_manager.add_view( { std::make_unique<CHomeView>( ), "\xef\x80\x95", "Home" } );
-    m_ui_manager.add_view( { std::make_unique<CPipelineView>( ), "\xef\x83\xa8", "Pipeline Demo" } );
-    m_ui_manager.add_view( { std::make_unique<CDebugView>( ), "\xef\x86\x88", "Debug" } );
-    m_ui_manager.add_view( { std::make_unique<CCacheDemoView>( ), "\xef\xbb\x9b", "Cache Demo" } );
-    m_ui_manager.set_settings_view( { std::make_unique<CSettingsView>( m_config ), "\xef\x80\x93", "Settings" } );
+    m_ui_manager.add_view( { std::make_unique<CHomeView>( ), ICON_HOME, "Home" } );
+    m_ui_manager.add_view( { std::make_unique<CPipelineView>( ), ICON_PIPE, "Pipeline Demo" } );
+    m_ui_manager.add_view( { std::make_unique<CDebugView>( ), ICON_BUG, "Debug" } );
+    m_ui_manager.add_view( { std::make_unique<CCacheDemoView>( ), ICON_CACHE, "Cache Demo" } );
+    m_ui_manager.set_settings_view( { std::make_unique<CSettingsView>( m_config ), ICON_GEAR, "Settings" } );
 
     m_menubar.add_group(
         { "File",
           {
-              { "\xef\x80\x81", "New", [] { Notify::show_notification( "File", "New", 1500 ); } },
-              { "\xef\x81\xbb", "Open", [] { Notify::show_notification( "File", "Open", 1500 ); } },
-              { "\xef\x83\x87", "Save", [] { Notify::show_notification( "File", "Saved!", 1500 ); } },
+              { ICON_NEW_FILE, "New", [] { Notify::show_notification( "File", "New", 1500 ); } },
+              { ICON_OPEN, "Open", [] { Notify::show_notification( "File", "Open", 1500 ); } },
+              { ICON_SAVE, "Save", [] { Notify::show_notification( "File", "Saved!", 1500 ); } },
           } } );
     m_menubar.add_group(
         { "Options",
           {
-              { "\xef\x80\x93", "Dark Mode", nullptr, &m_config.settings.dark_mode },
-              { "\xef\x83\xa8", "Feature A", nullptr, &m_toggle_a },
-              { "\xef\x86\x88", "Feature B", nullptr, &m_toggle_b },
-              { "\xef\x80\x95", "Feature C", nullptr, &m_toggle_c },
-              { "\xef\x80\x81", "Feature D", nullptr, &m_toggle_d },
-              { "\xef\x81\xbb", "Feature E", nullptr, &m_toggle_e },
+              { ICON_THEME, "Dark Mode", nullptr, &m_config.settings.dark_mode },
+              { ICON_TEST, "Feature A", nullptr, &m_toggle_a },
+              { ICON_TEST2, "Feature B", nullptr, &m_toggle_b },
+              { ICON_TEST3, "Feature C", nullptr, &m_toggle_c },
+              { ICON_TEST4, "Feature D", nullptr, &m_toggle_d },
+              { ICON_TEST5, "Feature E", nullptr, &m_toggle_e },
           } } );
     m_ui_manager.set_menubar( std::move( m_menubar ) );
 
