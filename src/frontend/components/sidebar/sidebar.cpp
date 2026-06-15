@@ -7,9 +7,9 @@ CBaseView* CSideBar::render( CBaseView* active ) {
     float width = collapsed ? 50.0f : 340.f;
 
     ImGui::BeginChild( "##sidebar", { width, 0 }, ImGuiChildFlags_Borders );
-    float      content_w = ImGui::GetContentRegionAvail( ).x;
-    float      btn_h     = ImGui::GetFrameHeight( );
-    CBaseView* r_item    = nullptr;
+    float content_w = ImGui::GetContentRegionAvail( ).x;
+    float btn_h = ImGui::GetFrameHeight( );
+    CBaseView* r_item = nullptr;
 
     if ( !collapsed ) {
         ImGui::PushFont( CFontManager::get( ).get_font( "jbm_reg_xl" ).value_or( nullptr ) );
@@ -35,9 +35,22 @@ CBaseView* CSideBar::render( CBaseView* active ) {
     }
 
     for ( const auto& item : m_items ) {
-        r_item = item.view;
-        break;
+        auto label = item.label;
+        if ( collapsed ) label = "";
+        if ( nav_button( item.icon, label, item.view == active, content_w ) ) {
+            r_item = item.view;
+            break;
+        }
     }
+
+    // there is an odd issue where it is not aligned properly if collapsed, cba rn TODO
+    ImGui::PushStyleVar( ImGuiStyleVar_ButtonTextAlign, ImVec2( 0.0f, 0.5f ) );
+    std::string spacing = "  ";
+    if ( collapsed ) spacing = "";
+    if ( ImGui::Button( std::format( "{}{} Settings", spacing, ICON_GEAR ).c_str( ), ImVec2( content_w, 0 ) ) ) {
+        r_item = m_settings;
+    }
+    ImGui::PopStyleVar( );
 
     ImGui::EndChild( );
     return r_item;
@@ -57,8 +70,10 @@ bool CSideBar::nav_button( const char* icon, const char* label, bool active, flo
     }
     ImGui::PushStyleVar( ImGuiStyleVar_ButtonTextAlign, ImVec2( 0.0f, 0.5f ) );
 
-    std::string text    = std::format( "  {}   {}##nav_{}", icon, label, label );
-    bool        clicked = ImGui::Button( text.c_str( ), ImVec2( width, 0 ) );
+    std::string spacing = "  ";
+    if ( collapsed ) spacing = "";
+    std::string text = std::format( "{}{}   {}##nav_{}", spacing, icon, label, label );
+    bool clicked = ImGui::Button( text.c_str( ), ImVec2( width, 0 ) );
 
     ImGui::PopStyleVar( );
     if ( active ) ImGui::PopStyleColor( 3 );
