@@ -66,12 +66,9 @@ jobs:
           CC: gcc-14
           CXX: g++-14
         run: |
-          PRESET=conan-release
-          if cmake --list-presets=configure 2>/dev/null | grep -q '"conan-default"'; then
-            PRESET=conan-default
-          fi
-          cmake --preset "$PRESET"
-          cmake --build --preset "$PRESET" --target ${{ env.APP_NAME }} -j$(nproc)
+          cmake --preset conan-release || cmake --preset conan-default
+          cmake --build build --target ${{ env.APP_NAME }} -j$(nproc) 2>/dev/null || \
+            cmake --build build/Release --target ${{ env.APP_NAME }} -j$(nproc)
 
       - name: Package AppImage
         if: inputs.package
@@ -158,10 +155,10 @@ jobs:
         shell: cmd
         run: |
           for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do call "%%i\VC\Auxiliary\Build\vcvars64.bat"
-          cmake --list-presets=configure 2>nul | find "conan-default" >nul
-          if %errorlevel% equ 0 (set PRESET=conan-default) else (set PRESET=conan-release)
-          cmake --preset %PRESET%
-          cmake --build --preset %PRESET% --target ${{ env.APP_NAME }}
+          cmake --preset conan-release
+          if errorlevel 1 cmake --preset conan-default
+          cmake --build build --target ${{ env.APP_NAME }}
+          if errorlevel 1 cmake --build build\Release --target ${{ env.APP_NAME }}
 
       - name: Locate exe
         if: inputs.package
@@ -210,12 +207,9 @@ jobs:
 
       - name: Build
         run: |
-          PRESET=conan-release
-          if cmake --list-presets=configure 2>/dev/null | grep -q '"conan-default"'; then
-            PRESET=conan-default
-          fi
-          cmake --preset "$PRESET"
-          cmake --build --preset "$PRESET" --target ${{ env.APP_NAME }} -j$(nproc)
+          cmake --preset conan-release || cmake --preset conan-default
+          cmake --build build --target ${{ env.APP_NAME }} -j$(nproc) 2>/dev/null || \
+            cmake --build build/Release --target ${{ env.APP_NAME }} -j$(nproc)
 
       - name: Package
         if: inputs.package
