@@ -1,0 +1,38 @@
+# to be updated..
+name: Release
+
+on:
+  push:
+    tags: [ 'v*' ]
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+    with:
+      package: true
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v8
+
+      - name: Rename artifacts
+        run: |
+          mv template_app-linux/template_app-x86_64.AppImage template_app-Linux-x86_64.AppImage
+          mv template_app-windows/template_app.exe template_app-Windows-x86_64.exe
+          mv template_app-macos-arm64/template_app-macOS-arm64.zip template_app-macOS-arm64.zip
+
+      - name: Create GitHub Release
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            template_app-Linux-x86_64.AppImage \
+            template_app-Windows-x86_64.exe \
+            template_app-macOS-arm64.zip \
+            --title "${{ github.ref_name }}" \
+            --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
