@@ -66,8 +66,12 @@ jobs:
           CC: gcc-14
           CXX: g++-14
         run: |
-          cmake --preset conan-default
-          cmake --build --preset conan-default --target ${{ env.APP_NAME }} -j$(nproc)
+          PRESET=conan-release
+          if cmake --list-presets=configure 2>/dev/null | grep -q '"conan-default"'; then
+            PRESET=conan-default
+          fi
+          cmake --preset "$PRESET"
+          cmake --build --preset "$PRESET" --target ${{ env.APP_NAME }} -j$(nproc)
 
       - name: Package AppImage
         if: inputs.package
@@ -154,8 +158,10 @@ jobs:
         shell: cmd
         run: |
           for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do call "%%i\VC\Auxiliary\Build\vcvars64.bat"
-          cmake --preset conan-default
-          cmake --build --preset conan-default --target ${{ env.APP_NAME }}
+          cmake --list-presets=configure 2>nul | find "conan-default" >nul
+          if %errorlevel% equ 0 (set PRESET=conan-default) else (set PRESET=conan-release)
+          cmake --preset %PRESET%
+          cmake --build --preset %PRESET% --target ${{ env.APP_NAME }}
 
       - name: Locate exe
         if: inputs.package
@@ -204,8 +210,12 @@ jobs:
 
       - name: Build
         run: |
-          cmake --preset conan-default
-          cmake --build --preset conan-default --target ${{ env.APP_NAME }} -j$(nproc)
+          PRESET=conan-release
+          if cmake --list-presets=configure 2>/dev/null | grep -q '"conan-default"'; then
+            PRESET=conan-default
+          fi
+          cmake --preset "$PRESET"
+          cmake --build --preset "$PRESET" --target ${{ env.APP_NAME }} -j$(nproc)
 
       - name: Package
         if: inputs.package
