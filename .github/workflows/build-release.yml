@@ -1,9 +1,11 @@
-# to be updated..
 name: Release
 
 on:
   push:
     tags: [ 'v*' ]
+
+env:
+  APP_NAME: template_app
 
 jobs:
   build:
@@ -22,16 +24,16 @@ jobs:
 
       - name: Rename artifacts
         run: |
-          mv template_app-linux/template_app-x86_64.AppImage template_app-Linux-x86_64.AppImage
-          mv template_app-windows/template_app.exe template_app-Windows-x86_64.exe
-          mv template_app-macos-arm64/template_app-macOS-arm64.zip template_app-macOS-arm64.zip
+          mv ${{ env.APP_NAME }}-linux/${{ env.APP_NAME }}-x86_64.AppImage ${{ env.APP_NAME }}-Linux-x86_64.AppImage
+          mv ${{ env.APP_NAME }}-windows/${{ env.APP_NAME }}.exe ${{ env.APP_NAME }}-Windows-x86_64.exe
+          mv ${{ env.APP_NAME }}-macos-arm64/${{ env.APP_NAME }}-macOS-arm64.zip ${{ env.APP_NAME }}-macOS-arm64.zip
 
       - name: Create GitHub Release
         run: |
           gh release create "${{ github.ref_name }}" \
-            template_app-Linux-x86_64.AppImage \
-            template_app-Windows-x86_64.exe \
-            template_app-macOS-arm64.zip \
+            ${{ env.APP_NAME }}-Linux-x86_64.AppImage \
+            ${{ env.APP_NAME }}-Windows-x86_64.exe \
+            ${{ env.APP_NAME }}-macOS-arm64.zip \
             --title "${{ github.ref_name }}" \
             --generate-notes
         env:
