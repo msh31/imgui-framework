@@ -33,7 +33,13 @@ void CWindowManager::run( std::function<void( )> fun ) {
     } while ( glfwGetKey( m_window, GLFW_KEY_Q ) != GLFW_PRESS && glfwWindowShouldClose( m_window ) == 0 );
 }
 
+static void error_callback( int error, const char* description ) {
+    auto str = std::format( "A fatal error occured: {}", description );
+    throw std::runtime_error( str.c_str( ) );
+}
+
 void CWindowManager::setup_opengl( ) {
+    glfwSetErrorCallback( error_callback );
     if ( !glfwInit( ) ) {
         throw std::runtime_error( "Failed to initialize GLFW" );
     }
@@ -46,14 +52,13 @@ void CWindowManager::setup_opengl( ) {
     m_window = glfwCreateWindow( DEF_RES_W, DEF_RES_H, APP_NAME.c_str( ), nullptr, nullptr );
     if ( m_window == nullptr ) {
         glfwTerminate( );
-        throw std::runtime_error( "Failed to create GLFW window, OpenGL 3.3 support is required" );
     }
 
     glfwSetWindowSizeLimits( m_window, MIN_RES_W, MIN_RES_H, MAX_RES_W, MAX_RES_H );
     glfwMakeContextCurrent( m_window );
     glfwSwapInterval( 1 );
     if ( !gladLoadGL( glfwGetProcAddress ) ) {
-        throw std::runtime_error( "Failed to initialize GLAD" );
+        throw std::runtime_error( "Failed to initialize GLAD!" );
     }
 }
 
