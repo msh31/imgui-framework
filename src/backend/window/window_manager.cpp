@@ -44,7 +44,7 @@ void CWindowManager::setup_opengl( ) {
         throw std::runtime_error( "Failed to initialize GLFW" );
     }
 
-    glfwWindowHint( GLFW_SAMPLES, 4 ); // 4x antialiasing (MSAA)
+    // glfwWindowHint( GLFW_SAMPLES, 4 ); // 4x antialiasing (MSAA)
     glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 );
     glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 3 );
     glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE ); // no old OpenGL
@@ -60,6 +60,8 @@ void CWindowManager::setup_opengl( ) {
     if ( !gladLoadGL( glfwGetProcAddress ) ) {
         throw std::runtime_error( "Failed to initialize GLAD!" );
     }
+
+    // glEnable( GL_MULTISAMPLE ); // enable MSAA...
 }
 
 void CWindowManager::setup_imgui( ) {
