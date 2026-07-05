@@ -3,8 +3,8 @@
 class CStatusBar {
     public:
         struct Item {
-                const char*           label;
-                const char*           value;
+                std::string label;
+                std::string value;
                 std::optional<ImVec4> dot_color;
         };
 

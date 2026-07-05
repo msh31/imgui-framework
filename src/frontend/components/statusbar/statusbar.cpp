@@ -8,7 +8,7 @@ void CStatusBar::render_item( const Item& item ) {
         ImGui::TextColored( *item.dot_color, "\xe2\x97\x8f" );
         ImGui::SameLine( 0, 4.f );
     }
-    ImGui::Text( "%s: %s", item.label, item.value );
+    ImGui::Text( "%s: %s", item.label.c_str( ), item.value.c_str( ) );
 }
 
 void CStatusBar::render( ) {
