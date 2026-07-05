@@ -4,7 +4,7 @@
 #include <frontend/icons.hpp>
 
 CBaseView* CSideBar::render( CBaseView* active ) {
-    float width = collapsed ? 50.0f : 340.f;
+    float width = collapsed ? 50.0f : 300.f;
 
     ImGui::BeginChild( "##sidebar", { width, 0 }, ImGuiChildFlags_Borders );
     float content_w = ImGui::GetContentRegionAvail( ).x;
@@ -16,7 +16,7 @@ CBaseView* CSideBar::render( CBaseView* active ) {
         ImGui::TextDisabled( "%s", APP_NAME.c_str( ) );
         ImGui::PopFont( );
         ImGui::SameLine( );
-        ImGui::SetCursorPosX( 29.0f * 10.f );
+        ImGui::SetCursorPosX( 26.0f * 10.f );
         ImGui::PushID( "uncollapsed_button" );
         if ( ImGui::Button( ICON_MENU ) ) {
             collapsed = !collapsed;
