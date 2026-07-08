@@ -4,6 +4,16 @@
 #include <frontend/fonts/font_awesome.hpp>
 #include <frontend/fonts/jbm_reg.h>
 
+bool CWindowManager::should_continue( ) {
+    bool window_open = glfwWindowShouldClose( m_window ) == 0;
+#ifndef NDEBUG
+    bool q_pressed = glfwGetKey( m_window, GLFW_KEY_Q ) == GLFW_PRESS;
+    return window_open && !q_pressed;
+#else
+    return window_open;
+#endif
+}
+
 void CWindowManager::run( std::function<void( )> fun ) {
     do {
         glClear( GL_COLOR_BUFFER_BIT );
@@ -30,7 +40,7 @@ void CWindowManager::run( std::function<void( )> fun ) {
         ImGui_ImplOpenGL3_RenderDrawData( ImGui::GetDrawData( ) );
         glfwSwapBuffers( m_window );
         glfwWaitEventsTimeout( 1.0 / 60.0 );
-    } while ( glfwGetKey( m_window, GLFW_KEY_Q ) != GLFW_PRESS && glfwWindowShouldClose( m_window ) == 0 );
+    } while ( should_continue( ) );
 }
 
 static void error_callback( int error, const char* description ) {
