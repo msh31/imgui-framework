@@ -62,6 +62,7 @@ set(template_app_SOURCES
 	"src/frontend/components/sidebar/sidebar.cpp"
 	"src/frontend/components/statusbar/statusbar.cpp"
 	"src/frontend/dialogs/confirm/confirm_dialog.cpp"
+	"src/frontend/layout/none/none.cpp"
 	"src/frontend/layout/ribbon/ribbon.cpp"
 	"src/frontend/layout/sidebar/sidebar.cpp"
 	"src/frontend/layout/tabbar/tabbar.cpp"
