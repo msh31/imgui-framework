@@ -1,8 +1,7 @@
 #include "app.hpp"
-#include <constants.hpp>
+#include <backend/branding.hpp>
+#include <backend/logger.hpp>
 
-#include <frontend/fonts/font_awesome.hpp>
-#include <frontend/fonts/jbm_reg.h>
 #include <frontend/icons.hpp>
 #include <frontend/theme/theme.hpp>
 
@@ -17,7 +16,6 @@
 
 void CApp::init( ) {
     setup_logger( );
-    ThemeManager::apply_style( );
 
     m_ui_manager.add_view( { std::make_unique<CHomeView>( ), ICON_HOME, "Home" } );
     m_ui_manager.add_view( { std::make_unique<CPipelineView>( ), ICON_PIPE, "Pipeline Demo" } );

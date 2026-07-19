@@ -1,4 +1,5 @@
-#include "app/app.hpp"
+#include <backend/app.hpp>
+#include <backend/logger.hpp>
 #include <backend/window/window_manager.hpp>
 
 #ifdef _WIN32 // forces Windows to treat the app as a GUI Application
@@ -7,8 +8,9 @@
 
 int main( ) {
     try {
-        CWindowManager window;
-        CApp           app;
+        CConfig        config;
+        CWindowManager window( config );
+        CApp           app( config );
 
         app.init( );
         SPDLOG_INFO( "Initialized succesfully!" );

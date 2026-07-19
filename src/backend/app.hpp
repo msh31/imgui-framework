@@ -10,11 +10,13 @@
 
 class CApp {
     public:
+        explicit CApp( CConfig& config ) : m_config( config ) {}
+
         void init( );
         void render( );
 
     private:
-        CConfig m_config;
+        CConfig& m_config;
         // CUIManager m_ui_manager { std::make_unique<CTabbarShell>() };
         // CUIManager m_ui_manager{ std::make_unique<CSidebarShell>( ) };
         CUIManager m_ui_manager{ std::make_unique<CNoShell>( ) }; // kinda sucks
