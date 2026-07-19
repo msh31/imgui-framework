@@ -4,6 +4,7 @@
  */
 
 #include "config.hpp"
+#include <backend/logger.hpp>
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;

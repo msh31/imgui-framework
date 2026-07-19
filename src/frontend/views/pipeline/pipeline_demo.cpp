@@ -1,4 +1,5 @@
 #include "pipeline_demo.hpp"
+#include <backend/logger.hpp>
 #include <backend/text_pipeline/text_pipeline.hpp>
 
 CPipelineView::CPipelineView( ) {

@@ -1,4 +1,5 @@
 #pragma once
+#include <backend/logger.hpp>
 
 #ifdef __APPLE__
     #include <spawn.h>

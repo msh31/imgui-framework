@@ -1,4 +1,5 @@
 #pragma once
+#include <backend/logger.hpp>
 #include <backend/task_runner/task_runner.hpp>
 
 template <typename T> class CCache {
