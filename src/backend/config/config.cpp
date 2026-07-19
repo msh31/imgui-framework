@@ -39,6 +39,8 @@ CConfig::~CConfig( ) {
 void CConfig::save( ) {
     json data;
     data["dark_mode"] = settings.dark_mode;
+    data["window_w"]  = settings.window_w;
+    data["window_h"]  = settings.window_h;
 
     std::ofstream file( m_config_file );
     file << data.dump( 4 );
@@ -56,6 +58,8 @@ void CConfig::load( ) {
     try {
         data               = json::parse( file );
         settings.dark_mode = data.value( "dark_mode", true );
+        settings.window_w  = data.value( "window_w", 0 );
+        settings.window_h  = data.value( "window_h", 0 );
     } catch ( json::exception& ex ) {
         SPDLOG_CRITICAL( "config parsing error: {}", ex.what( ) );
     }

@@ -1,8 +1,14 @@
 #include "window_manager.hpp"
-#include <constants.hpp>
+#include <backend/branding.hpp>
 
-#include <frontend/fonts/font_awesome.hpp>
-#include <frontend/fonts/jbm_reg.h>
+#include <frontend/fonts/font_registry.hpp>
+#include <frontend/theme/theme.hpp>
+
+namespace {
+    constexpr int kMinWindowW = 640;
+    constexpr int kMinWindowH = 480;
+    constexpr float kDefaultWindowFraction = 0.7f; // of the primary monitor's work area
+} // namespace
 
 bool CWindowManager::should_continue( ) {
     bool window_open = glfwWindowShouldClose( m_window ) == 0;
@@ -41,6 +47,8 @@ void CWindowManager::run( std::function<void( )> fun ) {
         glfwSwapBuffers( m_window );
         glfwWaitEventsTimeout( 1.0 / 60.0 );
     } while ( should_continue( ) );
+
+    remember_window_size( );
 }
 
 static void error_callback( int error, const char* description ) {
@@ -59,12 +67,26 @@ void CWindowManager::setup_opengl( ) {
     glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 3 );
     glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE ); // no old OpenGL
 
-    m_window = glfwCreateWindow( DEF_RES_W, DEF_RES_H, APP_NAME.c_str( ), nullptr, nullptr );
+    int width  = m_config.settings.window_w;
+    int height = m_config.settings.window_h;
+    if ( width <= 0 || height <= 0 ) {
+        // no persisted size yet - derive a sane default from the primary monitor instead of a hardcoded resolution
+        width  = kMinWindowW;
+        height = kMinWindowH;
+        if ( GLFWmonitor* monitor = glfwGetPrimaryMonitor( ) ) {
+            int mon_x, mon_y, mon_w, mon_h;
+            glfwGetMonitorWorkarea( monitor, &mon_x, &mon_y, &mon_w, &mon_h );
+            width  = std::max( kMinWindowW, static_cast<int>( mon_w * kDefaultWindowFraction ) );
+            height = std::max( kMinWindowH, static_cast<int>( mon_h * kDefaultWindowFraction ) );
+        }
+    }
+
+    m_window = glfwCreateWindow( width, height, APP_NAME.c_str( ), nullptr, nullptr );
     if ( m_window == nullptr ) {
         glfwTerminate( );
     }
 
-    glfwSetWindowSizeLimits( m_window, MIN_RES_W, MIN_RES_H, MAX_RES_W, MAX_RES_H );
+    glfwSetWindowSizeLimits( m_window, kMinWindowW, kMinWindowH, GLFW_DONT_CARE, GLFW_DONT_CARE );
     glfwMakeContextCurrent( m_window );
     glfwSwapInterval( 1 );
     if ( !gladLoadGL( glfwGetProcAddress ) ) {
@@ -72,6 +94,19 @@ void CWindowManager::setup_opengl( ) {
     }
 
     // glEnable( GL_MULTISAMPLE ); // enable MSAA...
+}
+
+void CWindowManager::remember_window_size( ) {
+    int w = 0, h = 0;
+    glfwGetWindowSize( m_window, &w, &h );
+    m_config.settings.window_w = w;
+    m_config.settings.window_h = h;
+}
+
+void CWindowManager::apply_content_scale( float scale ) {
+    m_content_scale = scale;
+    ThemeManager::apply_scale( scale );
+    ImGui::GetStyle( ).FontScaleDpi = scale;
 }
 
 void CWindowManager::setup_imgui( ) {
@@ -82,11 +117,17 @@ void CWindowManager::setup_imgui( ) {
     io.IniFilename = nullptr; // no imgui.ini
     io.LogFilename = nullptr; // no imgui log pls
 
-    CFontManager::get( ).load_from_memory( { "jbm_reg", 16.0f, false, true }, (void*)jbm_reg, jbm_reg_len );
-    CFontManager::get( ).load_from_memory(
-        { "font_awesome", 16.0f, true, false }, (void*)font_awesome, font_awesome_len );
+    ThemeManager::apply_style( );
+    CFontManager::get( ).load_all( font_registry( ) );
 
-    CFontManager::get( ).load_from_memory( { "jbm_reg_xl", 18.0f, false, false }, (void*)jbm_reg, jbm_reg_len );
+    glfwSetWindowUserPointer( m_window, this );
+    glfwSetWindowContentScaleCallback( m_window, []( GLFWwindow* window, float xscale, float ) {
+        static_cast<CWindowManager*>( glfwGetWindowUserPointer( window ) )->apply_content_scale( xscale );
+    } );
+
+    float xscale = 1.0f, yscale = 1.0f;
+    glfwGetWindowContentScale( m_window, &xscale, &yscale );
+    apply_content_scale( xscale );
 
     if ( !ImGui_ImplGlfw_InitForOpenGL( m_window, true ) ) {
         throw std::runtime_error( "Failed to initialize ImGui for OpenGL" );

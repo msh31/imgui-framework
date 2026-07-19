@@ -2,15 +2,16 @@
 
 struct FontData {
         std::string_view name;
-        float            size;
-        bool             is_icon;
-        bool             is_default;
+        void*            data;
+        int               data_len;
+        float             size; // base/design pixel size at 100% display scale
+        bool              is_icon;
+        bool              is_default;
 };
 
 class CFontManager {
     public:
-        void load_from_memory( FontData fd, void* data, int data_len );
-        // void load_from_disk(std::string font_name, float font_size, fs::path path);
+        void load_all( const std::vector<FontData>& fonts );
 
         std::optional<ImFont*> get_font( std::string_view font_name );
         static CFontManager&   get( );
@@ -22,7 +23,8 @@ class CFontManager {
         CFontManager& operator=( CFontManager&& )      = delete;
 
     private:
-        CFontManager( );
+        CFontManager( ) = default;
+        void load_one( const FontData& fd );
+
         std::unordered_map<std::string, ImFont*> m_fonts;
-        std::vector<FontData>                    m_font_data;
 };

@@ -9,6 +9,10 @@ class CConfig {
 
         struct AppConfig {
                 bool dark_mode = true;
+
+                // 0 means "unset" - window_manager computes a default from the primary monitor
+                int window_w = 0;
+                int window_h = 0;
         };
 
         AppConfig settings;
