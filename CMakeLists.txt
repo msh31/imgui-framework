@@ -51,7 +51,7 @@ find_package(GTest REQUIRED)
 # Target: template_app
 set(template_app_SOURCES
 	cmake.toml
-	"src/app/app.cpp"
+	"src/backend/app.cpp"
 	"src/backend/config/config.cpp"
 	"src/backend/font_manager/font_manager.cpp"
 	"src/backend/task_runner/task_runner.cpp"

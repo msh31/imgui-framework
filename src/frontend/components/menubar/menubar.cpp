@@ -1,5 +1,5 @@
 #include "menubar.hpp"
-#include <constants.hpp>
+#include <backend/branding.hpp>
 
 void CMenuBar::add_group( CMenuBarGroup group ) { m_groups.push_back( std::move( group ) ); }
 

@@ -1,6 +1,6 @@
 #include "sidebar.hpp"
+#include <backend/branding.hpp>
 #include <backend/font_manager/font_manager.hpp>
-#include <constants.hpp>
 #include <frontend/icons.hpp>
 
 CBaseView* CSideBar::render( CBaseView* active ) {

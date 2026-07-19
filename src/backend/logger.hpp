@@ -1,6 +1,6 @@
 #pragma once
+#include <backend/branding.hpp>
 #include <backend/paths.hpp>
-#include <constants.hpp>
 
 #include <spdlog/sinks/base_sink.h>
 #include <spdlog/sinks/daily_file_sink.h>
