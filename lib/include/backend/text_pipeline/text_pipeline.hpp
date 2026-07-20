@@ -1,5 +1,5 @@
 #pragma once
-#include "types.hpp"
+#include <types.hpp>
 
 using Stage = std::function<std::expected<std::string, PipelineError>( std::string )>;
 

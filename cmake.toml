@@ -24,8 +24,16 @@ required = true
 [variables]
 CMAKE_EXPORT_COMPILE_COMMANDS = true
 
+[target.template_lib]
+type = "static"
+sources = ["lib/src/**.cpp"]
+include-directories = ["lib/include"]
+compile-features = ["cxx_std_23"]
+link-libraries = ["nlohmann_json::nlohmann_json", "spdlog::spdlog"]
+precompile-headers = ["lib/include/lib_pch.hpp"]
+
 [target.template_app]
-type = "executable" 
+type = "executable"
 sources = [
     "src/**.cpp",
 
@@ -36,7 +44,7 @@ include-directories = [
     "vendor/imgui",
 ]
 compile-features = ["cxx_std_23"]
-link-libraries = ["glad::glad", "glfw", "imgui::imgui", "nlohmann_json::nlohmann_json", "spdlog::spdlog"]
+link-libraries = ["template_lib", "glad::glad", "glfw", "imgui::imgui", "spdlog::spdlog"]
 precompile-headers = ["src/pch.hpp"]
 cmake-after = """
 find_path(IMGUI_INCLUDE_DIR imgui.h REQUIRED)

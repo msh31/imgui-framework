@@ -3,7 +3,7 @@
  *  AND MODIFIED FOR THIS APP
  */
 
-#include "config.hpp"
+#include <backend/config/config.hpp>
 #include <backend/logger.hpp>
 #include <nlohmann/json.hpp>
 

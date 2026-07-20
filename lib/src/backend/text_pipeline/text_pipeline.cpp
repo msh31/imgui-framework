@@ -1,4 +1,4 @@
-#include "text_pipeline.hpp"
+#include <backend/text_pipeline/text_pipeline.hpp>
 
 void CTextPipeline::build( ) {
     m_stages.clear( );

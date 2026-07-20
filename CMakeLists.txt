@@ -48,14 +48,41 @@ find_package(spdlog REQUIRED)
 
 find_package(GTest REQUIRED)
 
+# Target: template_lib
+set(template_lib_SOURCES
+	cmake.toml
+	"lib/src/backend/config/config.cpp"
+	"lib/src/backend/task_runner/task_runner.cpp"
+	"lib/src/backend/text_pipeline/text_pipeline.cpp"
+)
+
+add_library(template_lib STATIC)
+
+target_sources(template_lib PRIVATE ${template_lib_SOURCES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${template_lib_SOURCES})
+
+target_compile_features(template_lib PUBLIC
+	cxx_std_23
+)
+
+target_include_directories(template_lib PUBLIC
+	"lib/include"
+)
+
+target_link_libraries(template_lib PUBLIC
+	nlohmann_json::nlohmann_json
+	spdlog::spdlog
+)
+
+target_precompile_headers(template_lib PUBLIC
+	"lib/include/lib_pch.hpp"
+)
+
 # Target: template_app
 set(template_app_SOURCES
 	cmake.toml
 	"src/backend/app.cpp"
-	"src/backend/config/config.cpp"
 	"src/backend/font_manager/font_manager.cpp"
-	"src/backend/task_runner/task_runner.cpp"
-	"src/backend/text_pipeline/text_pipeline.cpp"
 	"src/backend/ui_manager/ui_manager.cpp"
 	"src/backend/window/window_manager.cpp"
 	"src/frontend/components/menubar/menubar.cpp"
@@ -92,10 +119,10 @@ target_include_directories(template_app PRIVATE
 )
 
 target_link_libraries(template_app PRIVATE
+	template_lib
 	glad::glad
 	glfw
 	imgui::imgui
-	nlohmann_json::nlohmann_json
 	spdlog::spdlog
 )
 
